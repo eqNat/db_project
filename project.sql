@@ -1,9 +1,9 @@
 /* we use the name 'web_user' because 'user' is not a valid name in
 Oracle Database */
 CREATE TABLE web_user (
-    id VARCHAR(20),
+    id VARCHAR2(20),
     /* size of 255 in case we use a password hash */
-    password VARCHAR(255), 
+    password VARCHAR2(255), 
     /*
     Oracle Database does not support ENUM. We need to find an alternative.
     type ENUM('student', 'administrator')
@@ -11,10 +11,10 @@ CREATE TABLE web_user (
     PRIMARY KEY (id)
 );
 
-create table web_user_session (
-    id varchar2(32),
-    web_user_id varchar2(8),
-    session_date date,
+CREATE table web_user_session (
+    id VARCHAR2(32),
+    web_user_id VARCHAR2(20),
+    session_date DATE,
     PRIMARY KEY (id),
     FOREIGN KEY (web_user_id)
         REFERENCES web_user(id)
