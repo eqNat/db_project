@@ -11,7 +11,7 @@ function execute_sql_in_oracle($sql) {
   //putenv("ORACLE_HOME=/home/oracle/OraHome1");
   //putenv("ORACLE_SID=orcl");
 
-  $connection = oci_connect ("gq034", "dugnbw", "gqiannew2:1521/pdborcl");
+  $connection = oci_connect ("gq077", "qjstpi", "gqiannew2:1521/pdborcl");
   if($connection == false){
     // failed to connect
     display_oracle_error_message(null);
@@ -100,34 +100,6 @@ function execute_sqls_in_oracle($sqls) {
 
   return $return_array;
 }
-
-// //********************
-// // Verify the session id.  
-// // Return normally if it is verified.
-// // Terminate the script otherwise.
-// //********************
-function verify_session($sessionid) {
-  // lookup the sessionid in the session table to ascertain the clientid 
-  $sql = "select clientid " .
-    "from myclientsession " .
-    "where sessionid='$sessionid'";  
-
-  $result_array = execute_sql_in_oracle ($sql);
-  $result = $result_array["flag"];
-  $cursor = $result_array["cursor"];
-
-  $result = oci_execute($cursor);
-  if ($result == false){
-    display_oracle_error_message($cursor);
-    die("SQL Execution problem.");
-  }
-
-  if(!($values = oci_fetch_array ($cursor))){
-    // no active session - clientid is unknown
-    die("Invalid client!");
-  } 
-  oci_free_statement($cursor);
-} 
 
 //********************
 // Takes an executed errored oracle cursor as input.

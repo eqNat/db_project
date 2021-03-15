@@ -1,9 +1,11 @@
 <?
 $sessionid =$_GET["sessionid"];
 
-$clientid = ""; 
+$clientid = "";
+$isadmin = 0;
+$isstudent = 0; 
 
-$connection = oci_connect ("gq034", "dugnbw", "gqiannew2:1521/pdborcl");
+$connection = oci_connect ("gq077", "qjstpi", "gqiannew2:1521/pdborcl");
 
 if($connection == false){
   $e = oci_error(); 
@@ -18,9 +20,11 @@ else {
   }
   else{ 
     // lookup the sessionid in the session table to get the clientid 
-    $sql = "select clientid " .
-       "from myclientsession " .
-       "where sessionid='$sessionid'";  
+
+    $sql = "select a.clientid, isstudent, isadmin " .
+           "from myclientsession a " .
+           "join myclient b on a.clientid = b.clientid " .
+           "where sessionid='$sessionid'";  
 
     $cursor = oci_parse($connection, $sql);
     if($cursor == false){
@@ -40,6 +44,8 @@ else {
         if($values = oci_fetch_array ($cursor)){
           // found the sessionid
           $clientid = $values[0];
+          $isstudent = $values[1];
+          $isadmin = $values[2];
         } 
         else { 
           // invalid sessionid 
