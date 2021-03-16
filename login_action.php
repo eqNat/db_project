@@ -50,6 +50,7 @@ if($values = oci_fetch_array ($cursor)){
   } else {
     // insert OK - we have created a new session
     header("Location:welcomepage.php?sessionid=$sessionid");
+    exit();
   }
 } else { 
   // client username not found

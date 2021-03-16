@@ -1,5 +1,4 @@
 <?
-
 include "utility_functions.php";
 
 echo("so far so good");
@@ -25,4 +24,5 @@ if ($result == false){
 
 // jump to login page
 header("Location:login.html");
+exit();
 ?>
