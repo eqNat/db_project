@@ -1,4 +1,7 @@
 <?
+
+session_start();
+
 include "utility_functions.php";
 
 // Get the client id and password and verify them
@@ -44,14 +47,14 @@ if($values = oci_fetch_array ($cursor)){
   if ($result == false){
     display_oracle_error_message($cursor);
     die("Failed to create a new session");
-  }
-  else {
+  } else {
     // insert OK - we have created a new session
     header("Location:welcomepage.php?sessionid=$sessionid");
   }
-}
-else { 
+} else { 
   // client username not found
-  die ('Login failed.  Click <A href="login.html">here</A> to go back to the login page.');
+    $_SESSION["error"] = "ERROR";
+    header("Location:login.html");
+    exit();
 } 
 ?>
