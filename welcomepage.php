@@ -15,7 +15,12 @@ else {
   echo("<br/>$isstudent");
   echo("<br/>$isadmin");
 
-
-
+  if($isadmin == 1){
+    //echo("I'm and admin!");
+echo("
+    Click here to <a href='user_management.php?sessionid=$sessionid' tite='Logout'>do admin stuff.</a>
+    ");
+   // header("Location:user_management.php?sessionid=$sessionid");
+  }
 }
 ?>

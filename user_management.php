@@ -1,12 +1,13 @@
 <?
+include "verifysession.php";
 include "utility_functions.php";
 
 $sessionid =$_GET["sessionid"];
-verify_session($sessionid);
+//verify_session($sessionid);
 
-
+//echo($sessionid);
 // Generate the query section
-echo("
+ echo("
   <form method=\"post\" action=\"employee.php?sessionid=$sessionid\">
   Number: <input type=\"text\" size=\"10\" maxlength=\"10\" name=\"q_eid\"> 
   Firstname: <input type=\"text\" size=\"20\" maxlength=\"30\" name=\"q_fname\"> 
@@ -16,8 +17,8 @@ echo("
   Month (mm) <input type=\"text\" size=\"2\" maxlength=\"2\" name=\"q_start_month\"> 
   Day (dd) <input type=\"text\" size=\"2\" maxlength=\"2\" name=\"q_start_day\"> 
   Year (yyyy) <input type=\"text\" size=\"4\" maxlength=\"4\" name=\"q_start_year\"> 
-  ");
-
+  "); 
+/*
 // create the dropdown list for the departments in the query section.
 $sql = "select dnumber, dname from dept order by dnumber";
 
@@ -128,12 +129,12 @@ while ($values = oci_fetch_array ($cursor)){
   $dname = $values[5];
   echo("<tr>" . 
     "<td>$eid</td> <td>$fname</td> <td>$lname</td> <td>$start_date</td> <td>$dnumber</td> <td>$dname</td>".
-    " <td> <A HREF=\"emp_update.php?sessionid=$sessionid&eid=$eid\">Update</A> </td> ".
-    " <td> <A HREF=\"emp_delete.php?sessionid=$sessionid&eid=$eid\">Delete</A> </td> ".
+    " <td> <A HREF=\"user_update.php?sessionid=$sessionid&eid=$eid\">Update</A> </td> ".
+    " <td> <A HREF=\"user_delete.php?sessionid=$sessionid&eid=$eid\">Delete</A> </td> ".
     "</tr>");
 }
 oci_free_statement($cursor);
 
-echo "</table>";
+echo "</table>"; */
 
 ?>

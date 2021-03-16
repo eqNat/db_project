@@ -15,7 +15,7 @@ echo($sql);
 $result_array = execute_sql_in_oracle ($sql);
 $result = $result_array["flag"];
 $cursor = $result_array["cursor"];
-
+echo ($cursor);
 if ($result == false){
   display_oracle_error_message($cursor);
   die("Client Query Failed.");
@@ -32,7 +32,7 @@ if($values = oci_fetch_array ($cursor)){
 
   // store the link between the sessionid and the clientid
   // and when the session started in the session table
-
+echo "inserting session";
   $sql = "insert into myclientsession " .
     "(sessionid, clientid, sessiondate) " .
     "values ('$sessionid', '$clientid', sysdate)";
@@ -40,6 +40,8 @@ if($values = oci_fetch_array ($cursor)){
   $result_array = execute_sql_in_oracle ($sql);
   $result = $result_array["flag"];
   $cursor = $result_array["cursor"];
+
+echo "inserted session";
 
   if ($result == false){
     display_oracle_error_message($cursor);
