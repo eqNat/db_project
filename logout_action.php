@@ -8,9 +8,6 @@ $sessionid = $get_session();
 echo("session:");
 echo($sessionid);
 
-// php stops here suddenly
-verify_session($sessionid);
-
 echo("session:");
 echo($sessionid);
 // connection OK - delete the session.
