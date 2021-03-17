@@ -2,6 +2,7 @@
 // include the verification PHP script
 include "verifysession.php";
 
+$sessionid = session_id();
 if ($sessionid == "") { 
   // no active session - clientid is unknown
   echo("Invalid user!");

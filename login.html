@@ -1,5 +1,7 @@
+<?php
+    session_start();
+?>
 <HTML>
-
 <HEAD>
   <TITLE>Simple Login Form</TITLE>
 </HEAD>
@@ -10,6 +12,11 @@
     Password: <input type="password" name="password" size="20">
     <INPUT type="submit" name="submit" value="Login">
   </FORM>
+<?php 
+    if (isset($_SESSION["error"])) {
+       echo "<p>Invalid username or password</p>";
+    }
+    unset($_SESSION["error"]);
+?>
 </BODY>
-
 </HTML>
