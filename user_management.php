@@ -48,7 +48,7 @@ $cursor = $result_array["cursor"];
 
 if ($result == false){
   display_oracle_error_message($cursor);
-  die("Client Query Failed.");
+  die("Client Query Failed.") ;
 }
 
 // Display the query results
