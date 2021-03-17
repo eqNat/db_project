@@ -3,10 +3,7 @@ include "utility_functions.php";
 include "verifysession.php";
 
 $sessionid =$_GET["sessionid"];
-echo($sessionid);
 
-echo("session:");
-echo($sessionid);
 // connection OK - delete the session.
 $sql = "delete from myclientsession where sessionid = '$sessionid'";
 

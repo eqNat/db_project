@@ -37,7 +37,6 @@ echo($isadmin);
 
 // Form the insertion sql string and run it.
  $sql = "insert into myclient values ('$id', '$fname', '$lname', '$pwd', '$isstudent','$isadmin')";
-echo($sql);
 
 $result_array = execute_sql_in_oracle ($sql);
 $result = $result_array["flag"];

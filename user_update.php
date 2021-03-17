@@ -12,8 +12,7 @@ if (!isset($_POST["update_fail"])) { // from employee.php
   // the sql string
   $sql = "select clientid, fname, lname, isstudent, isadmin
   from myclient where clientid = '$q_eid'";
-  //echo($sql);
-
+ 
   $result_array = execute_sql_in_oracle ($sql);
   $result = $result_array["flag"];
   $cursor = $result_array["cursor"];
@@ -60,21 +59,6 @@ echo("
   Student (Required): <input type=\"checkbox\" checked = \"$isstudent\" value = \"isstudent\" name=\"isstudent\" >  <br />
   Admin (Required): <input type=\"checkbox\" checked = \"$isadmin\" value = \"isadmin\" name=\"isadmin\" >  <br />
   ");
-
-// Display department list as part of interface to display the record to be updated.
-// create the dropdown list for the departments.
-// $sql = "select dnumber, dname from dept order by dnumber";
-
-// $result_array = execute_sql_in_oracle ($sql);
-// $result = $result_array["flag"];
-// $cursor = $result_array["cursor"];
-
-// if ($result == false){
-//   display_oracle_error_message($cursor);
-//   die("Query Failed.");
-// }
-
-// oci_free_statement($cursor);
 
 echo("
   <input type=\"submit\" value=\"Update\">

@@ -2,7 +2,6 @@
 include "utility_functions.php";
 
 $sessionid =$_GET["sessionid"];
-//verify_session($sessionid);
 
 // Suppress PHP auto warning.
 ini_set( "display_errors", 0);  

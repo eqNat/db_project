@@ -3,16 +3,11 @@ include "verifysession.php";
 include "utility_functions.php";
 
 $sessionid =$_GET["sessionid"];
-//verify_session($sessionid);
-
-
 $q_eid = $_GET["eid"];
-
 
 // Fetech the record to be deleted and display it
 $sql = "select clientid, fname, lname, isstudent, isadmin
   from myclient where clientid = '$q_eid'";
-echo($sql);
 
 $result_array = execute_sql_in_oracle ($sql);
 $result = $result_array["flag"];
@@ -62,5 +57,4 @@ echo("
   <input type=\"submit\" value=\"Go Back\">
   </form>
   ");
-
 ?>
