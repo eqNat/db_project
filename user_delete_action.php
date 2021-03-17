@@ -1,8 +1,9 @@
 <?
+include "verifysession.php";
 include "utility_functions.php";
 
 $sessionid =$_GET["sessionid"];
-verify_session($sessionid);
+//verify_session($sessionid);
 
 
 ini_set( "display_errors", 0);  
@@ -11,8 +12,7 @@ ini_set( "display_errors", 0);
 $eid = $_POST["eid"];
 
 // Form the sql string and execute it.
-$sql = "delete from emp where eid = $eid";
-//echo($sql);
+$sql = "delete from myclient where clientid = '$eid'";
 
 $result_array = execute_sql_in_oracle ($sql);
 $result = $result_array["flag"];
@@ -26,7 +26,7 @@ if ($result == false){
 
   die("<i> 
 
-  <form method=\"post\" action=\"employee.php?sessionid=$sessionid\">
+  <form method=\"post\" action=\"user_management.php?sessionid=$sessionid\">
   Read the error message, and then try again:
   <input type=\"submit\" value=\"Go Back\">
   </form>
@@ -36,5 +36,5 @@ if ($result == false){
 }
 
 // Record deleted.  Go back.
-Header("Location:employee.php?sessionid=$sessionid");
+Header("Location:user_management.php?sessionid=$sessionid");
 ?>

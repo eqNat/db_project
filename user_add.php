@@ -16,7 +16,7 @@ echo("
   Firstname (Required): <input type=\"text\" value = \"$fname\" size=\"20\" maxlength=\"30\" name=\"fname\">  <br />
   Lastname (Required): <input type=\"text\" value = \"$lname\" size=\"20\" maxlength=\"30\" name=\"lname\">  <br />
   Student (Required): <input type=\"checkbox\" checked = \"$isstudent\" value = \"isstudent\" name=\"isstudent\" >  <br />
-  Admin (Required): <input type=\"checkbox\" checked = \"$isadmin\" value = \"isadmin" name=\"isadmin\" >  <br />
+  Admin (Required): <input type=\"checkbox\" checked = \"$isadmin\" value = \"isadmin\" name=\"isadmin\" >  <br />
   ");
 
 echo(" 
