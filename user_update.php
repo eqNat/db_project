@@ -53,7 +53,7 @@ else { // from emp_update_action.php
 
 // Display the record to be updated.
 echo("
-  <form method=\"post\" action=\"emp_update_action.php?sessionid=$sessionid\">
+  <form method=\"post\" action=\"user_update_action.php?sessionid=$sessionid\">
   Id (Read-only): <input type=\"text\" readonly value = \"$eid\" size=\"10\" maxlength=\"10\" name=\"eid\"> <br /> 
   Firstname (Required): <input type=\"text\" value = \"$fname\" size=\"20\" maxlength=\"30\" name=\"fname\">  <br />
   Lastname (Required): <input type=\"text\" value = \"$lname\" size=\"20\" maxlength=\"30\" name=\"lname\">  <br />
@@ -81,7 +81,7 @@ echo("
   <input type=\"reset\" value=\"Reset to Original Value\">
   </form>
 
-  <form method=\"post\" action=\"employee.php?sessionid=$sessionid\">
+  <form method=\"post\" action=\"user_management.php?sessionid=$sessionid\">
   <input type=\"submit\" value=\"Go Back\">
   </form>
   ");

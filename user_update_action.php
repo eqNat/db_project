@@ -8,9 +8,9 @@ $sessionid =$_GET["sessionid"];
 ini_set( "display_errors", 0);  
 
 // Obtain information for the record to be updated.
-$eid = $values[0];
-$fname = $values[1];
-$lname = $values[2];
+$eid = $_POST["eid"];
+$fname = $_POST["fname"];
+$lname = $_POST["lname"];
 $isstudent = 0;
 $isadmin = 0;
 
@@ -26,11 +26,11 @@ if(isset($_POST['isstudent']))
 
 // Form the sql string and execute it.
 $sql = "update myclient set fname = '$fname'
-, lname = '$lname
+, lname = '$lname'
 , isstudent = '$isstudent'
 , isadmin = '$isadmin'  
-where eid = $eid";
-//echo($sql);
+where clientid = '$eid'";
+echo($sql);
 
 $result_array = execute_sql_in_oracle ($sql);
 $result = $result_array["flag"];
