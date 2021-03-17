@@ -12,7 +12,7 @@ if($connection == false){
   echo $e['message']."<BR>";
   $sessionid=""; 
 } 
-else { 
+else {   
   // connection OK - validate current sessionid 
   if (!isset($sessionid) or ($sessionid=="")) { 
     // no session to maintain 
@@ -42,7 +42,7 @@ else {
       }
       else{
         if($values = oci_fetch_array ($cursor)){
-          // found the sessionid
+          // found the sessionid          
           $clientid = $values[0];
           $isstudent = $values[1];
           $isadmin = $values[2];
