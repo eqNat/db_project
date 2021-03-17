@@ -8,6 +8,18 @@ $sessionid =$_GET["sessionid"];
 $eid = $_POST["eid"];
 $fname = $_POST["fname"];
 $lname = $_POST["lname"];
+$isstudent = 0;
+$isadmin = 0;
+
+if(isset($_POST['isstudent']))
+  {
+    $isstudent = 1;
+  }
+
+  if(isset($_POST['isadmin']) )
+  {
+    $isadmin = 1;
+  }
 
 // display the insertion form.
 echo("
