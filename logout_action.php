@@ -3,7 +3,7 @@ include "utility_functions.php";
 include "verifysession.php";
 
 // connection OK - delete the session.
-$sql = "delete from myclientsession where sessionid = '$sessionid'";
+$sql = "delete from myclientsession where clientid = '$clientid'";
 
 $result_array = execute_sql_in_oracle ($sql);
 $result = $result_array["flag"];
