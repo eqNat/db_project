@@ -2,10 +2,7 @@
 include "utility_functions.php";
 include "verifysession.php";
 
-echo("so far so good");
-
 $sessionid = $get_session();
-echo("session:");
 echo($sessionid);
 
 echo("session:");
