@@ -1,26 +1,24 @@
 <?
-session_start();
-function verify_session($sessionid) {
+$sessionid =$_GET["sessionid"];
 
 $clientid = "";
 $isadmin = 0;
 $isstudent = 0; 
 
-echo 'connecting<BR>';
-$connection = oci_connect("gq077", "qjstpi", "gqiannew2:1521/pdborcl");
-echo 'connected<BR>';
+$connection = oci_connect ("gq034", "dugnbw", "gqiannew2:1521/pdborcl");
 
-
-if($connection == false) {
+if($connection == false){
   $e = oci_error(); 
   echo $e['message']."<BR>";
   $sessionid=""; 
-} else { 
+} 
+else {   
   // connection OK - validate current sessionid 
-  if (($sessionid == false) or ($sessionid=="")) { 
+  if (!isset($sessionid) or ($sessionid=="")) { 
     // no session to maintain 
     $sessionid=""; 
-  } else { 
+  }
+  else{ 
     // lookup the sessionid in the session table to get the clientid 
 
     $sql = "select a.clientid, isstudent, isadmin " .
@@ -29,25 +27,27 @@ if($connection == false) {
            "where sessionid='$sessionid'";  
 
     $cursor = oci_parse($connection, $sql);
-    if($cursor == false) {
+    if($cursor == false){
       $e = oci_error($connection);  
       echo $e['message']."<BR>";
       // query failed - login impossible
       $sessionid="";
-    } else {       
+    }
+    else{       
       $result = oci_execute($cursor);
-      if ($result == false) {
+      if ($result == false){
         $e = oci_error($cursor);  
         echo $e['message']."<BR>";
         $sessionid="";
-      } else {
+      }
+      else{
         if($values = oci_fetch_array ($cursor)){
-        echo " found session <BR>";
-          // found the sessionid
+          // found the sessionid          
           $clientid = $values[0];
           $isstudent = $values[1];
           $isadmin = $values[2];
-        } else { 
+        } 
+        else { 
           // invalid sessionid 
           $sessionid = ""; 
         } 
@@ -57,6 +57,4 @@ if($connection == false) {
   } 
   oci_close($connection);
 } 
-}
 ?>
-

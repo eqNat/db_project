@@ -11,7 +11,7 @@ function execute_sql_in_oracle($sql) {
   //putenv("ORACLE_HOME=/home/oracle/OraHome1");
   //putenv("ORACLE_SID=orcl");
 
-  $connection = oci_connect ("gq077", "qjstpi", "gqiannew2:1521/pdborcl");
+  $connection = oci_connect ("gq034", "dugnbw", "gqiannew2:1521/pdborcl");
   if($connection == false){
     // failed to connect
     display_oracle_error_message(null);
@@ -44,59 +44,6 @@ function execute_sql_in_oracle($sql) {
 
   $return_array["flag"] = $result;
   $return_array["cursor"] = $cursor;
-
-  return $return_array;
-}
-
-//********************
-// Run the sql, and return the error flag and the cursor in an array
-// The array index "flag" contains the flag.
-// The array index "cursor" contains the cursor.
-//********************
-function execute_sqls_in_oracle($sqls) {
-  //putenv("ORACLE_HOME=/home/oracle/OraHome1");
-  //putenv("ORACLE_SID=orcl");
-
-  $connection = oci_connect ("test", "test", "gqiannew2:1521/pdborcl");
-  if($connection == false){
-    // failed to connect
-    display_oracle_error_message(null);
-    die("Failed to connect");
-  }
-
-  $cursors = array();
-  $results = array();
-
-  foreach ($sqls as $sql){
-    $cursor = oci_parse($connection, $sql);
-
-    if ($cursor == false) {
-      display_oracle_error_message($connection);
-      oci_close ($connection);
-      // sql failed 
-      die("SQL Parsing Failed");
-    }
-
-    array_push($cursors, $cursor);
-    $result = oci_execute($cursor);
-
-    if ($result == false) {
-      display_oracle_error_message($cursor);
-      oci_close ($connection);
-      // sql failed 
-      die("SQL execution Failed");
-    }
-
-    array_push($results, $result);
-    // commit the result
-    //oci_commit ($connection);
-  }
-  // close the connection with oracle
-  oci_close ($connection);  
-  
-
-  $return_array["flags"] = $results;
-  $return_array["cursors"] = $cursors;
 
   return $return_array;
 }

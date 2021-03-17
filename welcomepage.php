@@ -2,7 +2,6 @@
 // include the verification PHP script
 include "verifysession.php";
 
-$sessionid = session_id();
 if ($sessionid == "") { 
   // no active session - clientid is unknown
   echo("Invalid user!");
@@ -16,7 +15,10 @@ else {
   echo("<br/>$isstudent");
   echo("<br/>$isadmin");
 
-
-
+  if($isadmin == 1){
+    echo("
+      Click here to <a href='user_management.php?sessionid=$sessionid' tite='Logout'>do admin stuff.</a>
+    ");
+  }
 }
 ?>
