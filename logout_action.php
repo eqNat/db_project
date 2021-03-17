@@ -1,13 +1,9 @@
 <?
 include "utility_functions.php";
+include "verifysession.php";
 
-echo("so far so good");
-
-$sessionid =$_GET["sessionid"];
-echo("session:");
+$sessionid = $get_session();
 echo($sessionid);
-
-verify_session($sessionid);
 
 echo("session:");
 echo($sessionid);
