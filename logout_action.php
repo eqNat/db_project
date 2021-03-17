@@ -1,12 +1,14 @@
 <?
 include "utility_functions.php";
+include "verifysession.php";
 
 echo("so far so good");
 
-$sessionid =$_GET["sessionid"];
+$sessionid = $get_session();
 echo("session:");
 echo($sessionid);
 
+// php stops here suddenly
 verify_session($sessionid);
 
 echo("session:");
