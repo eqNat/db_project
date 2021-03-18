@@ -27,27 +27,29 @@ oci_free_statement($cursor);
 $eid = $values[0];
 $fname = $values[1];
 $lname = $values[2];
-$isstudent = 0;
-$isadmin = 0;
+$isstudent =  $values[3];
+$isadmin =  $values[4];
 
-if(isset($_POST['isstudent']))
-  {
-    $isstudent = 1;
-  }
-
-  if(isset($_POST['isadmin']) )
-  {
-    $isadmin = 1;
-  }
 // Display the record to be deleted.
 echo("
   <form method=\"post\" action=\"user_delete_action.php?sessionid=$sessionid\">
   Id (Read-only): <input readonly type=\"text\" value = \"$eid\" size=\"10\" maxlength=\"10\" name=\"eid\"> <br /> 
   Firstname: <input type=\"text\" disabled value = \"$fname\" size=\"20\" maxlength=\"30\" name=\"fname\">  <br />
   Lastname: <input type=\"text\" disabled value = \"$lname\" size=\"20\" maxlength=\"30\" name=\"lname\">  <br />
-  Student (Required): <input type=\"checkbox\" disabled checked = \"$isstudent\" value = \"isstudent\" name=\"isstudent\" >  <br />
-  Admin (Required): <input type=\"checkbox\" disabled checked = \"$isadmin\" value = \"isadmin\" name=\"isadmin\" >  <br />
-  ");
+  Student: <input disabled type=\"checkbox\" "); 
+  
+  if($isstudent == 1){
+    echo(" checked ");
+  }
+  
+  echo(" name=\"isstudent\" >  <br />
+  Admin: <input disabled type=\"checkbox\" ");
+
+  if($isadmin ==1){
+    echo(" checked ");
+  }
+  
+  echo(" name=\"isadmin\" >  <br />");  
 
 echo("
   </select>  <input type=\"submit\" value=\"Delete\">
