@@ -20,7 +20,7 @@ else {
       Click here to <a href='user_management.php?sessionid=$sessionid' tite='Logout'>do admin stuff.</a>
     ");
   }
-  echo("
+  echo("<BR>
     <a href='change_password.html'>Change Password</a>
   ");
 }
