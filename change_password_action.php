@@ -1,53 +1,105 @@
 <?
+include "verifysession.php";
 include "utility_functions.php";
 
 $sessionid =$_GET["sessionid"];
-verify_session($sessionid);
+
+// Suppress PHP auto warning.
+ini_set( "display_errors", 0); 
+
+// Obtain information for the record to be updated.
+$opwd = $_POST["opwd"];
+$npwd = $_POST["npwd"];
+$cpwd = $_POST["cpwd"];
+$isstudent = 0;
+$isadmin = 0;
+
+if(isset($_POST['isstudent']))
+{
+  $isstudent = 1;
+}
+
+if(isset($_POST['isadmin']) )
+{
+  $isadmin = 1;
+}
 
 // Verify how we reach here
-if (!isset($_POST["update_fail"])) { // from welceomepage.php
-  // Get the dnumber, fetch the record to be updated from the database 
-  $q_dnumber = $_GET["dnumber"];
+if(!isset($_POST["update_fail"])) 
+{ // from welceomepage.php
 
-  // the sql string
-  $sql = "select dnumber, dname, location from dept where dnumber = $q_dnumber";
-  //echo($sql);
+  // validate input - existence
+  if( strlen($opwd) == 0 || strlen($npwd) == 0 || strlen($cpwd) == 0 )
+  {
+    die("<form method=\"post\" action=\"change_password.php?sessionid=$sessionid\">
+    Passwords cannot be blank. Try again:
+    <input type=\"submit\" value=\"Go Back\">
+    </form>");
+  }
 
+  // validate input - new and confirm match
+  if( strcmp($npwd, $cpwd) != 0 )
+  {
+    die("<form method=\"post\" action=\"change_password.php?sessionid=$sessionid\">
+    New and Confirm passwords do not match. Try again:
+    <input type=\"submit\" value=\"Go Back\">
+    </form>");
+  }
+
+  // check old password
+  $sql = "select a.clientid from myclient a 
+          join myclientsession b on a.clientid = b.clientid 
+          where password = '$opwd' and sessionid = '$sessionid'";
   $result_array = execute_sql_in_oracle ($sql);
   $result = $result_array["flag"];
   $cursor = $result_array["cursor"];
 
-  if ($result == false){
+  // test for query error
+  if( $result == false )
+  {
     display_oracle_error_message($cursor);
-    die("Query Failed.");
+    die("Old Password Query Failed.");
   }
 
-  $values = oci_fetch_array ($cursor);
-  oci_free_statement($cursor);
+  // test if result returned
+  if( ($values = oci_fetch_array($cursor)) != false)
+  {
+    oci_free_statement($cursor);
 
-  $dnumber = $values[0];
-  $dname = $values[1];
-  $location = $values[2];
+    // found the client
+    $clientid = $values[0];
+    
+    // Form the sql string and execute it.
+    $sql = "update myclient set password = '$npwd' 
+            where clientid = '$clientid'";
+    
+    $result_array = execute_sql_in_oracle ($sql);
+    $result = $result_array["flag"];
+    $cursor = $result_array["cursor"];
+
+    if( $result == false )
+    {
+      display_oracle_error_message($cursor);
+      die("Update Query Failed.");
+    }
+
+    $values = oci_fetch_array ($cursor);
+    oci_free_statement($cursor);
+  }
+  else 
+  { // old password did not match
+    die("<form method=\"post\" action=\"change_password.php?sessionid=$sessionid\">
+    Old password was incorrect. Try again:
+    <input type=\"submit\" value=\"Go Back\">
+    </form>");
+  }
+
+  //  update successful
+  echo("
+    <form method=\"post\" action=\"welcomepage.php?sessionid=$sessionid\">
+      Password update successful!
+      <input type=\"submit\" value=\"Continue\">
+    </form>
+ ");
 }
-else { // from update_action.php
-  // Get the values of the record to be updated directly
-  $dnumber = $_POST["dnumber"];
-  $dname = $_POST["dname"];
-  $location = $_POST["location"];
-}
-
-// display the record to be updated.  
-echo("
-  <form method=\"post\" action=\"dept_update_action.php?sessionid=$sessionid\">
-  Number (Read-only): <input type=\"text\" readonly value = \"$dnumber\" size=\"5\" maxlength=\"5\" name=\"dnumber\"> <br /> 
-  Name (Required): <input type=\"text\" value = \"$dname\" size=\"50\" maxlength=\"50\" name=\"dname\">  <br />
-  Location: <input type=\"text\" value = \"$location\" size=\"100\" maxlength=\"100\" name=\"location\">  <br />
-  <input type=\"submit\" value=\"Update\">
-  <input type=\"reset\" value=\"Reset to Original Value\">
-  </form>
-
-  <form method=\"post\" action=\"department.php?sessionid=$sessionid\">
-  <input type=\"submit\" value=\"Go Back\">
-  </form>
-  ");
 ?>
