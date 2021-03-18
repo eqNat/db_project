@@ -1,5 +1,6 @@
 <?
-$sessionid =$_GET["sessionid"];
+session_start();
+$sessionid = session_id();;
 
 $clientid = "";
 $isadmin = 0;
