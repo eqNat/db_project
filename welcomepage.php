@@ -2,8 +2,6 @@
 // include the verification PHP script
 include "verifysession.php";
 
-echo "referer: ".getenv("HTTP_REFERER")."<BR>";
-
 if ($sessionid == "") { 
   // no active session - clientid is unknown
   echo("Invalid user!");
