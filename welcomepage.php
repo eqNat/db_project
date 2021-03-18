@@ -2,13 +2,23 @@
 // include the verification PHP script
 include "verifysession.php";
 
+echo "referer: ".getenv("HTTP_REFERER")."<BR>";
+
 if ($sessionid == "") { 
   // no active session - clientid is unknown
   echo("Invalid user!");
 } 
 else {
   // here we can generate the content of the welcome page
-  echo("Hello, welcome to my Website.<br/>
+
+  // https://stackoverflow.com/questions/834303/startswith-and-endswith-functions-in-php 
+  // I implemented endsWith()
+  $from = "login.html";
+  if (substr(getenv("HTTP_REFERER"), -strlen($from)) === $from) {
+    echo("Hello, welcome to my Website.<br/>");
+  }
+
+  echo("
   Click here to <a href='logout_action.php?sessionid=$sessionid' tite='Logout'>Logout.</a>
   ");
 
