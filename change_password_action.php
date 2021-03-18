@@ -11,7 +11,6 @@ if (!isset($_POST["update_fail"])) { // from welceomepage.php
 
   // the sql string
   $sql = "select dnumber, dname, location from dept where dnumber = $q_dnumber";
-  //echo($sql);
 
   $result_array = execute_sql_in_oracle ($sql);
   $result = $result_array["flag"];

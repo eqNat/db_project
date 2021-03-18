@@ -12,8 +12,7 @@ if (!isset($_POST["update_fail"])) { // from employee.php
   // the sql string
   $sql = "select clientid, fname, lname, isstudent, isadmin
   from myclient where clientid = '$q_eid'";
-  //echo($sql);
-
+ 
   $result_array = execute_sql_in_oracle ($sql);
   $result = $result_array["flag"];
   $cursor = $result_array["cursor"];
@@ -37,8 +36,8 @@ else { // from emp_update_action.php
   $eid = $values[0];
   $fname = $values[1];
   $lname = $values[2];
-  $isstudent = 0;
-  $isadmin = 0;
+  $isstudent = '';
+  $isadmin = '';
   
   if(isset($_POST['isstudent']))
     {
@@ -51,30 +50,31 @@ else { // from emp_update_action.php
     }
 }
 
+echo($isstudent);
+echo($isadmin);
+
+//($isstudent==1 ? 'checked' : '');
+
 // Display the record to be updated.
 echo("
   <form method=\"post\" action=\"user_update_action.php?sessionid=$sessionid\">
   Id (Read-only): <input type=\"text\" readonly value = \"$eid\" size=\"10\" maxlength=\"10\" name=\"eid\"> <br /> 
   Firstname (Required): <input type=\"text\" value = \"$fname\" size=\"20\" maxlength=\"30\" name=\"fname\">  <br />
   Lastname (Required): <input type=\"text\" value = \"$lname\" size=\"20\" maxlength=\"30\" name=\"lname\">  <br />
-  Student (Required): <input type=\"checkbox\" checked = \"$isstudent\" value = \"isstudent\" name=\"isstudent\" >  <br />
-  Admin (Required): <input type=\"checkbox\" checked = \"$isadmin\" value = \"isadmin\" name=\"isadmin\" >  <br />
-  ");
+  Student (Required): <input type=\"checkbox\" "); 
+  
+  if($isstudent ==1){
+    echo(" checked ");
+  }
+  
+  echo(" name=\"isstudent\" >  <br />
+  Admin (Required): <input type=\"checkbox\" ");
 
-// Display department list as part of interface to display the record to be updated.
-// create the dropdown list for the departments.
-// $sql = "select dnumber, dname from dept order by dnumber";
-
-// $result_array = execute_sql_in_oracle ($sql);
-// $result = $result_array["flag"];
-// $cursor = $result_array["cursor"];
-
-// if ($result == false){
-//   display_oracle_error_message($cursor);
-//   die("Query Failed.");
-// }
-
-// oci_free_statement($cursor);
+  if($isadmin ==1){
+    echo(" checked ");
+  }
+  
+  echo(" name=\"isadmin\" >  <br />");
 
 echo("
   <input type=\"submit\" value=\"Update\">

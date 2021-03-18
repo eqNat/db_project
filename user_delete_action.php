@@ -3,8 +3,6 @@ include "verifysession.php";
 include "utility_functions.php";
 
 $sessionid =$_GET["sessionid"];
-//verify_session($sessionid);
-
 
 ini_set( "display_errors", 0);  
 
