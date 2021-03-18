@@ -20,4 +20,9 @@ create table myclientsession (
 insert into myclient values ('s','Joe','Student','a',1,0);
 insert into myclient values ('a','Jane','Admin','a',0,1);
 insert into myclient values ('sa','Sheev','Palpatine','a',1,1);
+insert into myclient values ('dm','Darth','Maul','a',1,0);
+insert into myclient values ('dv','Darth','Vader','a',1,0);
+insert into myclient values ('db','Darth','Bane','a',1,0);
+insert into myclient values ('dz','Darth','Zannah','a',1,0);
+insert into myclient values ('at','Ahsoka','Tano','a',1,0);
 commit;
