@@ -64,7 +64,7 @@ while ($values = oci_fetch_array ($cursor)){
     "<td>$eid</td> <td>$fname</td> <td>$lname</td> <td>$isstudent</td> <td>$isadmin</td> ".
     " <td> <A HREF=\"user_update.php?sessionid=$sessionid&eid=$eid\">Update</A> </td> ".
     " <td> <A HREF=\"user_delete.php?sessionid=$sessionid&eid=$eid\">Delete</A> </td> ".
-    " <td> <A HREF=\"user_password_reset.php?sessionid=$sessionid&eid=$eid\">Reset</A> </td> ".
+    " <td> <A HREF=\"reset_password.php?sessionid=$sessionid&eid=$eid\">Reset</A> </td> ".
     "</tr>");
 }
 oci_free_statement($cursor);
