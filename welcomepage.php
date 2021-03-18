@@ -16,23 +16,25 @@ else {
     echo("Hello, welcome to my Website.<br/>");
   }
 
-  echo("
-  Click here to <a href='logout_action.php?sessionid=$sessionid' tite='Logout'>Logout.</a>
-  ");
+ 
 
   if ($isadmin == 1){
-    echo("<BR>
-      Click here to <a href='user_management.php?sessionid=$sessionid' tite='Logout'>do admin stuff.</a>
+    echo("
+    <br/><br/>Admin<br/>  Click here to <a href='user_management.php?sessionid=$sessionid' tite='Logout'>Administer Students</a>
     ");
   }
   if ($isstudent == 1) {
-    echo ("<BR>
-      <a href='table.html?sessionid=$sessionid' tite='Logout'>View Grades</a>
+    echo ("
+    <br/><br/>Student<br/> Click here to <a href='table.html?sessionid=$sessionid' tite='Logout'>View Grades</a>
         ");
   }
 
-  echo("<BR>
-    <a href='change_password.php?sessionid=$sessionid'>Change Password</a>
+  echo("
+  <br/> <br/>Click here to <a href='change_password.php?sessionid=$sessionid'>Change Your Password</a>
+  ");
+
+  echo("
+  <br/> <br/> Click here to <a href='logout_action.php?sessionid=$sessionid' tite='Logout'>Logout.</a>
   ");
 }
 ?>
