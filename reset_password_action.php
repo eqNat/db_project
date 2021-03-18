@@ -2,34 +2,16 @@
 include "utility_functions.php";
 
 $sessionid =$_GET["sessionid"];
+$eid =$_GET["eid"];
 
 // Suppress PHP auto warning.
 ini_set( "display_errors", 0);  
 
-// Obtain information for the record to be updated.
-$eid = $_POST["eid"];
-$fname = $_POST["fname"];
-$lname = $_POST["lname"];
-$isstudent = 0;
-$isadmin = 0;
-
-if(isset($_POST['isstudent']))
-  {
-    $isstudent = 1;
-  }
-
-  if(isset($_POST['isadmin']) )
-  {
-    $isadmin = 1;
-  }
 
 // Form the sql string and execute it.
-$sql = "update myclient set fname = '$fname'
-, lname = '$lname'
-, isstudent = '$isstudent'
-, isadmin = '$isadmin'  
+$sql = "update myclient set password = 'a'  
 where clientid = '$eid'";
-echo($sql);
+
 
 $result_array = execute_sql_in_oracle ($sql);
 $result = $result_array["flag"];
@@ -37,7 +19,7 @@ $cursor = $result_array["cursor"];
 
 if ($result == false){
   // Error handling interface.
-  echo "<B>Update Failed.</B> <BR />";
+  echo "<B>Reset Failed.</B> <BR />";
 
   display_oracle_error_message($cursor);
 
