@@ -15,7 +15,7 @@ else {
   if (substr(getenv("HTTP_REFERER"), -strlen($from)) === $from) {
     echo("Hello $fname $lname, welcome to my Website.<br/>");
   } else {
-    echo("logged in as $fname $lname<br/>");
+    echo("Logged in as $fname $lname<br/>");
   }
 
   if ($isadmin == 1){
