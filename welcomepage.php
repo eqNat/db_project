@@ -20,9 +20,6 @@ else {
   Click here to <a href='logout_action.php?sessionid=$sessionid' tite='Logout'>Logout.</a>
   ");
 
-  echo("<br/>$isstudent");
-  echo("<br/>$isadmin");
-
   if ($isadmin == 1){
     echo("<BR>
       Click here to <a href='user_management.php?sessionid=$sessionid' tite='Logout'>do admin stuff.</a>
@@ -35,7 +32,7 @@ else {
   }
 
   echo("<BR>
-    <a href='change_password.html'>Change Password</a>
+    <a href='change_password.php?sessionid=$sessionid'>Change Password</a>
   ");
 }
 ?>
