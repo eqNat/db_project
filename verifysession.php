@@ -8,7 +8,7 @@ $lname = "";
 $isadmin = 0;
 $isstudent = 0; 
 
-$connection = oci_connect ("gq034", "dugnbw", "gqiannew2:1521/pdborcl");
+$connection = oci_connect ("gq077", "qjstpi", "gqiannew2:1521/pdborcl");
 
 if($connection == false){
   $e = oci_error(); 
