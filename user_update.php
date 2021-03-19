@@ -50,11 +50,6 @@ else { // from emp_update_action.php
     }
 }
 
-echo($isstudent);
-echo($isadmin);
-
-//($isstudent==1 ? 'checked' : '');
-
 // Display the record to be updated.
 echo("
   <form method=\"post\" action=\"user_update_action.php?sessionid=$sessionid\">
