@@ -23,8 +23,6 @@ $q_student = $_POST["q_student"];
 $q_admin = $_POST["q_admin"];
 $whereClause = " 1 = 1 ";
 
-echo($q_student);
-
 if (isset($q_id) and trim($q_id) != "") { 
   $whereClause .= " and clientid = '$q_id'"; 
 }
