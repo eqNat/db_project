@@ -8,11 +8,10 @@ echo("
   <form method=\"post\" action=\"user_management.php?sessionid=$sessionid\">
   Id: <input type=\"text\" size=\"10\" maxlength=\"10\" name=\"q_id\"> 
   First Name: <input type=\"text\" size=\"20\" maxlength=\"30\" name=\"q_fname\"> 
-  Last Name: <input type=\"text\" size=\"20\" maxlength=\"30\" name=\"q_lname\"> 
+  Last Name: <input type=\"text\" size=\"20\" maxlength=\"30\" name=\"q_lname\"> <br/>
+  Student: <input type=\"checkbox\" size=\"20\" maxlength=\"30\" name=\"q_student\"> <br/>
+  Admin: <input type=\"checkbox\" size=\"20\" maxlength=\"30\" name=\"q_admin\"> <br/><br/>
   <input type=\"submit\" value=\"Submit\">
-  </form>
-  <form method=\"post\" action=\"user_add.php?sessionid=$sessionid\">
-  <input type=\"submit\" value=\"Add A New User\">
   </form>
   "); 
 
@@ -20,7 +19,8 @@ echo("
 $q_id = $_POST["q_id"];
 $q_fname = strtoupper ($_POST["q_fname"]);
 $q_lname = strtoupper ($_POST["q_lname"]);
-
+$q_student = $_POST["q_student"];
+$q_admin = $_POST["q_admin"];
 $whereClause = " 1 = 1 ";
 
 if (isset($q_id) and trim($q_id) != "") { 
@@ -33,6 +33,14 @@ if (isset($q_fname) and $q_fname != "") {
 
 if (isset($q_lname) and $q_lname != "") { 
   $whereClause .= " and UPPER(lname) like '%$q_lname%'"; 
+}
+
+if (isset($q_student)) { 
+  $whereClause .= " and isstudent = 1"; 
+}
+
+if (isset($q_admin)) { 
+  $whereClause .= " and isadmin = 1"; 
 }
 
 // Form the query statement and run it.
@@ -73,6 +81,9 @@ echo "</table>";
 
 echo("
 <br />
+<form method=\"post\" action=\"user_add.php?sessionid=$sessionid\">
+<input type=\"submit\" value=\"Add A New User\">
+</form>
 <form method=\"post\" action=\"welcomepage.php?sessionid=$sessionid\">
 <input type=\"submit\" value=\"Go Back\">
 </form> 
