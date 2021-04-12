@@ -8,7 +8,7 @@ $lname = "";
 $isadmin = 0;
 $isstudent = 0; 
 
-$connection = oci_connect ("gq034", "dugnbw", "gqiannew2:1521/pdborcl");
+$connection = oci_connect ("gq024", "ycanmf", "gqiannew2:1521/pdborcl");
 
 if($connection == false){
   $e = oci_error(); 
@@ -24,7 +24,7 @@ else {
   else{ 
     // lookup the sessionid in the session table to get the clientid 
 
-    $sql = "select a.clientid, fname, lname, isstudent, isadmin " .
+    $sql = "select a.clientid, b.fname, b.lname, b.isadmin, b.studentid " .
            "from myclientsession a " .
            "join myclient b on a.clientid = b.clientid " .
            "where sessionid='$sessionid'";  
@@ -49,8 +49,8 @@ else {
           $clientid = $values[0];
           $fname = $values[1];
           $lname = $values[2];
-          $isstudent = $values[3];
-          $isadmin = $values[4];
+          $isadmin = $values[3];
+          $isstudent = is_null($values[4]) ? 0 : 1;
         } 
         else { 
           // invalid sessionid 
