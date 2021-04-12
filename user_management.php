@@ -36,7 +36,7 @@ if (isset($q_lname) and $q_lname != "") {
 }
 
 if (isset($q_student)) { 
-  $whereClause .= " and isstudent = 1"; 
+  $whereClause .= " and studentid IS NOT NULL"; 
 }
 
 if (isset($q_admin)) { 
@@ -44,7 +44,7 @@ if (isset($q_admin)) {
 }
 
 // Form the query statement and run it.
-$sql = "select clientid, fname, lname, isstudent, isadmin
+$sql = "select clientid, fname, lname, isadmin, studentid
   from myclient where $whereClause order by clientid";
 
 $result_array = execute_sql_in_oracle ($sql);
@@ -65,11 +65,11 @@ while ($values = oci_fetch_array ($cursor)){
   $eid = $values[0];
   $fname = $values[1];
   $lname = $values[2];
-  $isstudent = $values[3];
-  $isadmin = $values[4];
+  $isadmin = $values[3];
+  $studentid = $values[4];
 
   echo("<tr>" . 
-    "<td>$eid</td> <td>$fname</td> <td>$lname</td> <td>$isstudent</td> <td>$isadmin</td> ".
+    "<td>$eid</td> <td>$fname</td> <td>$lname</td> <td>$studentid</td> <td>$isadmin</td> ".
     " <td> <A HREF=\"user_update.php?sessionid=$sessionid&eid=$eid\">Update</A> </td> ".
     " <td> <A HREF=\"user_delete.php?sessionid=$sessionid&eid=$eid\">Delete</A> </td> ".
     " <td> <A HREF=\"reset_password.php?sessionid=$sessionid&eid=$eid\">Reset</A> </td> ".
