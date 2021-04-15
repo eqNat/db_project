@@ -41,7 +41,7 @@ INSERT INTO student VALUES (student_id_seq.nextval, 25, 'United States', 'Oklaho
 INSERT INTO myclient VALUES ('a','Jane','Admin','a',1);
 
 INSERT INTO myclient VALUES ('sa','Sheev','Palpatine','a',1);
-INSERT INTO student VALUES (student_id_seq.nextval, 50, 'Canada', 'Ontario', 'Toronto', '501 Made-up Dr', 78, 55575, 'a');
+INSERT INTO student VALUES (student_id_seq.nextval, 50, 'Canada', 'Ontario', 'Toronto', '501 Made-up Dr', 78, 55575, 'sa');
 
 INSERT INTO myclient VALUES ('dm','Darth','Maul','a',0);
 INSERT INTO student VALUES (student_id_seq.nextval, 45, 'United States', 'Kansas', 'Leawood', '502 Made-up Dr', NULL, 55575, 'dm');
