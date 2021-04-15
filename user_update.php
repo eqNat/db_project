@@ -10,7 +10,7 @@ if (!isset($_POST["update_fail"])) { // from employee.php
   $q_eid = $_GET["eid"];
 
   // the sql string
-  $sql = "select clientid, fname, lname, isstudent, isadmin
+  $sql = "select clientid, fname, lname, isadmin
   from myclient where clientid = '$q_eid'";
  
   $result_array = execute_sql_in_oracle ($sql);
@@ -28,8 +28,7 @@ if (!isset($_POST["update_fail"])) { // from employee.php
   $eid = $values[0];
   $fname = $values[1];
   $lname = $values[2];
-  $isstudent = $values[3];
-  $isadmin = $values[4];
+  $isadmin = $values[3];
 }
 else { // from emp_update_action.php
   // Obtain values of the record to be updated directly.
@@ -56,6 +55,8 @@ echo("
   Id (Read-only): <input type=\"text\" readonly value = \"$eid\" size=\"10\" maxlength=\"10\" name=\"eid\"> <br /> 
   Firstname (Required): <input type=\"text\" value = \"$fname\" size=\"20\" maxlength=\"30\" name=\"fname\">  <br />
   Lastname (Required): <input type=\"text\" value = \"$lname\" size=\"20\" maxlength=\"30\" name=\"lname\">  <br />
+  age (Required): <input type=\"text\" value = \"$lname\" size=\"20\" maxlength=\"30\" name=\"lname\">  <br />
+  age (Required): <input type=\"text\" value = \"$lname\" size=\"20\" maxlength=\"30\" name=\"lname\">  <br />
   Student (Required): <input type=\"checkbox\" "); 
   
   if($isstudent ==1){

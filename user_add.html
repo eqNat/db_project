@@ -1,0 +1,57 @@
+<?
+//include "verifysession.php";
+
+session_start();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+  <form method="post" action="user_add_action.php">
+      <label>Id (Required, up to 10 digits)</label>
+      <input type="text" size="10" maxlength="10" name="eid"> <br /> 
+      <label>Firstname (Required):</label>
+      <input type="text" size="30" maxlength="30" name="fname">  <br />
+      <label>Lastname (Required):</label>
+      <input type="text" size="30" maxlength="30" name="lname">  <br />
+      <label>Password (Required):</label>
+      <input type="text" size="20" maxlength="20" name="password">  <br />
+      <label>Student (Required):</label>
+      <input type="checkbox" value = "Yes" name="isstudent">  <br />
+      <label>Admin (Required):</label>
+      <input type="checkbox" value = "Yes" name="isadmin">  <br />
+      <p>fill in the fields below if you selected "Student"</p>
+      <label>Age</label>
+      <input type="text" size="3" maxlength="3" name="age">  <br />
+      <label>country</label>
+      <input type="text" size="30" maxlength="30" name="country">  <br />
+      <label>state/province/region</label>
+      <input type="text" size="30" maxlength="30" name="admin_div">  <br />
+      <label>city</label>
+      <input type="text" size="30" maxlength="30" name="city">  <br />
+      <label>street address</label>
+      <input type="text" size="30" maxlength="30" name="street">  <br />
+      <label>apartment number</label>
+      <input type="text" size="20" maxlength="10" name="apt_num">  <br />
+      <label>zip</label>
+      <input type="text" size="9" maxlength="9" name="zip">  <br />
+
+  <input type="submit" value="Add">
+  <input type="reset" value="Reset to Original Value">
+  </form>
+  <form method="post" action="user_management.php">
+  <input type="submit" value="Go Back">
+  </form>
+  <?php
+
+   if (isset($_SESSION["user_add_error"])) {
+       echo "<p>" . $_SESSION["user_add_error"] . "</p> <br>";
+       unset($_SESSION["user_add_error"]);
+   }
+
+  ?>
+</body>
+</html>

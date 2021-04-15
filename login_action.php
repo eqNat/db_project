@@ -39,6 +39,7 @@ if($values = oci_fetch_array ($cursor)){
   $result = $result_array["flag"];
   $cursor = $result_array["cursor"];
   echo ($cursor);
+  echo ("made it here<br>");
 
   if ($result == false){
     display_oracle_error_message($cursor);
