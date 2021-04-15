@@ -24,13 +24,15 @@ else {
   else{ 
     // lookup the sessionid in the session table to get the clientid 
 
-    $sql = "select a.clientid, b.fname, b.lname, b.isadmin, b.studentid " .
+    $sql = "select a.clientid, b.fname, b.lname, b.isadmin, c.studentid " .
            "from myclientsession a " .
            "join myclient b on a.clientid = b.clientid " .
+           "left join student c on b.clientid = c.clientid " .
            "where sessionid='$sessionid'";  
 
     $cursor = oci_parse($connection, $sql);
     if($cursor == false){
+      echo "parse failed<br>";
       $e = oci_error($connection);  
       echo $e['message']."<BR>";
       // query failed - login impossible
@@ -39,6 +41,7 @@ else {
     else{       
       $result = oci_execute($cursor);
       if ($result == false){
+        echo "execute failed<br>";
         $e = oci_error($cursor);  
         echo $e['message']."<BR>";
         $sessionid="";

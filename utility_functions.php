@@ -1,27 +1,32 @@
 <?
 // Contains commonly used functions.
 
+function oci_connect_local() {
+  $connection = oci_connect ("gq024", "ycanmf", "gqiannew2:1521/pdborcl");
+  if($connection == false){
+    // failed to connect
+    display_oracle_error_message(null);
+    die("Failed to connect");
+  }
+  return $connection;
+}
 
 //********************
 // Run the sql, and return the error flag and the cursor in an array
 // The array index "flag" contains the flag.
 // The array index "cursor" contains the cursor.
 //********************
+
 function execute_sql_in_oracle($sql) {
   //putenv("ORACLE_HOME=/home/oracle/OraHome1");
   //putenv("ORACLE_SID=orcl");
 
-  $connection = oci_connect ("gq034", "dugnbw", "gqiannew2:1521/pdborcl");
-  if($connection == false){
-    // failed to connect
-    display_oracle_error_message(null);
-    die("Failed to connect");
-  }
+  $connection = oci_connect_local();
 
   $cursor = oci_parse($connection, $sql);
 
   if ($cursor == false) {
-    display_oracle_error_message($connection);
+    display_oracle_error_message(oci_error($connection));
     oci_close ($connection);
     // sql failed 
     die("SQL Parsing Failed");
@@ -30,14 +35,11 @@ function execute_sql_in_oracle($sql) {
   $result = oci_execute($cursor);
 
   if ($result == false) {
-    display_oracle_error_message($cursor);
+    display_oracle_error_message(oci_error($cursor));
     oci_close ($connection);
     // sql failed 
     die("SQL execution Failed");
   }
-
-  // commit the result
-  //oci_commit ($connection);
 
   // close the connection with oracle
   oci_close ($connection);  
@@ -53,10 +55,10 @@ function execute_sql_in_oracle($sql) {
 // Display an initerpreted error message.
 //********************
 function display_oracle_error_message($resource) {
-  if (is_null($resource))
+   if (is_null($resource))
     $err = oci_error();
   else
-    $err = oci_error($resource);
+    $err = oci_error($resource); 
 
   echo "<BR />";
   echo "Oracle Error Code: " . $err['code'] . "<BR />";

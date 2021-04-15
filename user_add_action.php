@@ -1,72 +1,103 @@
-<?
+<?php
 include "utility_functions.php";
 
-$sessionid =$_GET["sessionid"];
-//verify_session($sessionid);
+session_start();
 
 // Suppress PHP auto warnings.
-ini_set( "display_errors", 0);  
+ini_set("display_errors", 0);
 
-// Get the values of the record to be inserted.
-$eid = trim($_POST["eid"]);
-if ($eid == "") $eid = "NULL";
+try
+{// Add user to database
+    $connection = oci_connect_local();
 
-$id = $_POST["eid"];
-$fname = $_POST["fname"];
-$lname = $_POST["lname"];
-$pwd = "a";
-$isstudent = 0;
-$isadmin = 0;
+    {// Insert myclient table
+        $sql_myclient = "insert into myclient values(
+                         :clientid,
+                         :fname,
+                         :lname,
+                         :password,
+                         ".($_POST['isadmin'] ? "1" : "0").")";
 
-if(isset($_POST['isstudent']))
-  {
-    $isstudent = 1;
-  }
+        $stmt_myclient = oci_parse($connection, $sql_myclient);
+        if (! $stmt_myclient)
+        {// Throw an exception
+            $error = oci_error($connection);
+            throw new Exception($error['message']);
+        }
 
-  if(isset($_POST['isadmin']) )
-  {
-    $isadmin = 1;
-  }
+        // If a bind fails...
+        if (! (oci_bind_by_name($stmt_myclient, ':clientid', $_POST['eid'], 10)
+            && oci_bind_by_name($stmt_myclient, ':fname', $_POST['fname'], 30)
+            && oci_bind_by_name($stmt_myclient, ':lname', $_POST['lname'], 30)
+            && oci_bind_by_name($stmt_myclient, ':password', $_POST['password'], 20)
+        ) )
+        {// ...Throw an exception
+            $error = oci_error($stmt_myclient);
+            throw new Exception($error['message']);
+        }
 
-echo($id);
-echo($fname);
-echo($lname);
-echo($pwd);
-echo($isstudent);
-echo($isadmin);
+        // We don't want to commit 'myclient' without 'student',
+        // which is why we use 'OCI_NO_AUTO_COMMIT'
+        if (! oci_execute($stmt_myclient, OCI_NO_AUTO_COMMIT))
+        {// throw an exception
+            $error = oci_error($stmt_myclient);
+            throw new Exception($error['message']);
+        }
+    }
 
-// Form the insertion sql string and run it.
- $sql = "insert into myclient values ('$id', '$fname', '$lname', '$pwd', '$isstudent','$isadmin')";
+    if (isset($_POST["isstudent"]))
+    {// Insert student table
+        $sql_student = "insert into student values
+            (student_id_seq.nextval,
+            :age,
+            :country,
+            :admin_div,
+            :city,
+            :street,
+            :apt_num,
+            :zip,
+            :clientid)";
 
-$result_array = execute_sql_in_oracle ($sql);
-$result = $result_array["flag"];
-$cursor = $result_array["cursor"];
+        $stmt_student = oci_parse($connection, $sql_student);
+        if (! $stmt_student)
+        {// Throw an exception
+            $error = oci_error($connection);
+            throw new Exception($error['message']);
+        }
 
-if ($result == false){
-  // Error handling interface.
-  echo "<B>Insertion Failed.</B> <BR />";
+        // If a bind fails...
+        if (! (oci_bind_by_name($stmt_student, ':age', $_POST['age'], 3)
+            && oci_bind_by_name($stmt_student, ':country', $_POST['country'], 30)
+            && oci_bind_by_name($stmt_student, ':admin_div', $_POST['admin_div'], 30)
+            && oci_bind_by_name($stmt_student, ':city', $_POST['city'], 30)
+            && oci_bind_by_name($stmt_student, ':street', $_POST['street'], 30)
+            && oci_bind_by_name($stmt_student, ':apt_num', $_POST['apt_num'], 10)
+            && oci_bind_by_name($stmt_student, ':zip', $_POST['zip'], 9)
+            && oci_bind_by_name($stmt_student, ':clientid', $_POST['eid'], 10)
+        ) )
+        {// ...Throw an exception
+            $error = oci_error($stmt_student);
+            throw new Exception($error['message']);
+        }
 
-  display_oracle_error_message($cursor);
-  
-  die("<i> 
-
-  <form method=\"post\" action=\"emp_add?sessionid=$sessionid\">
-
-  <input type=\"hidden\" value = \"$id\" name=\"eid\">
-  <input type=\"hidden\" value = \"$fname\" name=\"fname\">
-  <input type=\"hidden\" value = \"$lname\" name=\"lname\">
-  <input type=\"hidden\" value = \"$pwd\" name=\"pwd\">
-  <input type=\"hidden\" value = \"$isstudent\" name=\"isstudent\">
-  <input type=\"hidden\" value = \"$isadmin\" name=\"isadmin\">
-  
-  Read the error message, and then try again:
-  <input type=\"submit\" value=\"Go Back\">
-  </form>
-
-  </i>
-  ");
+        if (! oci_execute($stmt_student, OCI_NO_AUTO_COMMIT))
+        {// Throw an exception
+            $error = oci_error($stmt_student);
+            throw new Exception($error['message']);
+        }
+    }
+    oci_commit($connection);
+}
+catch (Exception $e)
+{
+    $_SESSION['user_add_error'] = $e->getMessage();
+    oci_rollback($connection);
+}
+finally
+{
+    oci_close($connection);
+    Header("Location:user_add.html");
+    exit();
 }
 
-// Record inserted.  Go back.
-Header("Location:user_management.php?sessionid=$sessionid");
 ?>
