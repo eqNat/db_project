@@ -26,7 +26,7 @@ function execute_sql_in_oracle($sql) {
   $cursor = oci_parse($connection, $sql);
 
   if ($cursor == false) {
-    display_oracle_error_message(oci_error($connection));
+    display_oracle_error_message($connection);
     oci_close ($connection);
     // sql failed 
     die("SQL Parsing Failed");
@@ -35,7 +35,7 @@ function execute_sql_in_oracle($sql) {
   $result = oci_execute($cursor);
 
   if ($result == false) {
-    display_oracle_error_message(oci_error($cursor));
+    display_oracle_error_message($cursor);
     oci_close ($connection);
     // sql failed 
     die("SQL execution Failed");

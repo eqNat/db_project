@@ -1,7 +1,6 @@
 <?php
 include "utility_functions.php";
-
-session_start();
+include "verifysession.php";
 
 // Suppress PHP auto warnings.
 ini_set("display_errors", 0);

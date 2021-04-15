@@ -1,9 +1,7 @@
 <?
 // include the verification PHP script
-Include "verifysession.php";
 include "utility_functions.php";
-
-$sessionid =$_GET["sessionid"];
+include "verifysession.php";
 
 // Get values for the record to be added if from change_password_action.php
 $opwn = $_POST["opwn"];
@@ -24,7 +22,7 @@ if(isset($_POST['isstudent']))
 
 // display form
 echo("
-  <form method=\"post\" action=\"change_password_action.php?sessionid=$sessionid\">
+  <form method=\"post\" action=\"change_password_action.php\">
    <label for=\"opwd\">Old Password:</label><input type=\"password\" value=\"$opwn\" name=\"opwd\" id=\"opwd\"><br/>
    <label for=\"npwd\">New Password:</label><input type=\"password\" value=\"$npwd\" name=\"npwd\" id=\"npwd\"><br/>
    <label for=\"cpwd\">Confirm Password:</label><input type=\"password\" value=\"$cpwd\" name=\"cpwd\" id=\"cpwd\"><br/>
@@ -33,7 +31,7 @@ echo("
   ");
 echo("
   <br/>
-  <form method=\"post\" action=\"welcomepage.php?sessionid=$sessionid\">
+  <form method=\"post\" action=\"welcomepage.php\">
    <input type=\"submit\" value=\"Go Back\">
   </form>
   ");
