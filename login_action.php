@@ -29,6 +29,7 @@ if($values = oci_fetch_array ($cursor)){
 
   // found the client
   $clientid = $values[0];
+  echo "clientid $clientid <br>";
 
   // check if the session exists
   $sessionid = session_id();
@@ -51,6 +52,7 @@ if($values = oci_fetch_array ($cursor)){
 
       // store the link between the sessionid and the clientid
       // and when the session started in the session table
+    echo "<br>$sessionid<br>";
     echo "inserting session";
       $sql = "insert into myclientsession " .
         "(sessionid, clientid, sessiondate) " .
@@ -68,7 +70,7 @@ if($values = oci_fetch_array ($cursor)){
       }
       // insert OK - we have created a new session
   }
-  header("Location:welcomepage.php?sessionid=$sessionid");
+  header("Location:welcomepage.php");
   exit();
 } else { 
   // client username not found

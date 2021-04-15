@@ -1,7 +1,6 @@
 <?
 include "utility_functions.php";
-
-$sessionid =$_GET["sessionid"];
+include "verifysession.php";
 
 // Suppress PHP auto warning.
 ini_set( "display_errors", 0);  
@@ -43,7 +42,7 @@ if ($result == false){
 
   die("<i> 
 
-  <form method=\"post\" action=\"user_update?sessionid=$sessionid\">
+  <form method=\"post\" action=\"user_update\">
 
   <input type=\"hidden\" value = \"1\" name=\"update_fail\">
   <input type=\"hidden\" value = \"$eid\" name=\"eid\">
@@ -61,5 +60,5 @@ if ($result == false){
 }
 
 // Record updated.  Go back.
-Header("Location:user_management.php?sessionid=$sessionid");
+Header("Location:user_management.php");
 ?>

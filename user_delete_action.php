@@ -2,8 +2,6 @@
 include "verifysession.php";
 include "utility_functions.php";
 
-$sessionid =$_GET["sessionid"];
-
 ini_set( "display_errors", 0);  
 
 
@@ -24,7 +22,7 @@ if ($result == false){
 
   die("<i> 
 
-  <form method=\"post\" action=\"user_management.php?sessionid=$sessionid\">
+  <form method=\"post\" action=\"user_management.php\">
   Read the error message, and then try again:
   <input type=\"submit\" value=\"Go Back\">
   </form>
@@ -34,5 +32,5 @@ if ($result == false){
 }
 
 // Record deleted.  Go back.
-Header("Location:user_management.php?sessionid=$sessionid");
+Header("Location:user_management.php");
 ?>

@@ -2,10 +2,8 @@
 include "verifysession.php";
 include "utility_functions.php";
 
-$sessionid =$_GET["sessionid"];
-
 echo("
-  <form method=\"post\" action=\"user_management.php?sessionid=$sessionid\">
+  <form method=\"post\" action=\"user_management.php\">
   Id: <input type=\"text\" size=\"10\" maxlength=\"10\" name=\"q_id\"> 
   First Name: <input type=\"text\" size=\"20\" maxlength=\"30\" name=\"q_fname\"> 
   Last Name: <input type=\"text\" size=\"20\" maxlength=\"30\" name=\"q_lname\"> <br/>
@@ -70,9 +68,9 @@ while ($values = oci_fetch_array ($cursor)){
 
   echo("<tr>" . 
     "<td>$eid</td> <td>$fname</td> <td>$lname</td> <td>$isadmin</td> ".
-    " <td> <A HREF=\"user_update.php?sessionid=$sessionid&eid=$eid\">Update</A> </td> ".
-    " <td> <A HREF=\"user_delete.php?sessionid=$sessionid&eid=$eid\">Delete</A> </td> ".
-    " <td> <A HREF=\"reset_password.php?sessionid=$sessionid&eid=$eid\">Reset</A> </td> ".
+    " <td> <A HREF=\"user_update.php?eid=$eid\">Update</A> </td> ".
+    " <td> <A HREF=\"user_delete.php?eid=$eid\">Delete</A> </td> ".
+    " <td> <A HREF=\"reset_password.php?eid=$eid\">Reset</A> </td> ".
     "<td>$password</td>".
     "</tr>");
 }
@@ -80,13 +78,11 @@ oci_free_statement($cursor);
 
 echo "</table>";
 
-echo("
-<br />
-<form method=\"post\" action=\"user_add.html?sessionid=$sessionid\">
-<input type=\"submit\" value=\"Add A New User\">
-</form>
-<form method=\"post\" action=\"welcomepage.php?sessionid=$sessionid\">
-<input type=\"submit\" value=\"Go Back\">
-</form> 
-")
+echo("<br />
+    <form method=\"post\" action=\"user_add.html\">
+    <input type=\"submit\" value=\"Add A New User\">
+    </form>
+    <form method=\"post\" action=\"welcomepage.php\">
+    <input type=\"submit\" value=\"Go Back\">
+    </form> ")
 ?>
