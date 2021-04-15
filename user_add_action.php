@@ -10,7 +10,7 @@ try
 {// Add user to database
     $connection = oci_connect_local();
 
-    {// Insert myclient table
+    {// Insert myclient record
         $sql_myclient = "insert into myclient values(
                          :clientid,
                          :fname,
@@ -46,7 +46,7 @@ try
     }
 
     if (isset($_POST["isstudent"]))
-    {// Insert student table
+    {// Insert student record
         $sql_student = "insert into student values
             (student_id_seq.nextval,
             :age,
