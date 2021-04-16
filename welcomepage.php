@@ -25,7 +25,7 @@ echo ("
 }
 
 echo("
-<br/> <br/>Click here to <a href='change_password.php'>Change Your Password</a>
+<br/> <br/>Click here to <a href='change_password.html'>Change Your Password</a>
 ");
 
 echo("
