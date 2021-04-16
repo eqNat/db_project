@@ -29,7 +29,7 @@ if(!isset($_POST["update_fail"]))
   // validate input - existence
   if( strlen($opwd) == 0 || strlen($npwd) == 0 || strlen($cpwd) == 0 )
   {
-    die("<form method=\"post\" action=\"change_password.php\">
+    die("<form method=\"post\" action=\"change_password.html\">
     Passwords cannot be blank. Try again:
     <input type=\"submit\" value=\"Go Back\">
     </form>");
@@ -38,7 +38,7 @@ if(!isset($_POST["update_fail"]))
   // validate input - new and confirm match
   if( strcmp($npwd, $cpwd) != 0 )
   {
-    die("<form method=\"post\" action=\"change_password.php\">
+    die("<form method=\"post\" action=\"change_password.html\">
     New and Confirm passwords do not match. Try again:
     <input type=\"submit\" value=\"Go Back\">
     </form>");
@@ -86,7 +86,7 @@ if(!isset($_POST["update_fail"]))
   }
   else 
   { // old password did not match
-    die("<form method=\"post\" action=\"change_password.php\">
+    die("<form method=\"post\" action=\"change_password.html\">
     Old password was incorrect. Try again:
     <input type=\"submit\" value=\"Go Back\">
     </form>");
