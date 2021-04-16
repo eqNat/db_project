@@ -57,4 +57,49 @@ INSERT INTO student VALUES (student_id_seq.nextval, 30, 'United States', 'Kansas
 
 INSERT INTO myclient VALUES ('at','Ahsoka','Tano','a',1);
 
+-- Course and Section part
+
+DROP TABLE course CASCADE CONSTRAINTS;
+DROP TABLE section CASCADE CONSTRAINTS;
+DROP TABLE enrolled CASCADE CONSTRAINTS;
+DROP TABLE requires CASCADE CONSTRAINTS;
+
+CREATE TABLE course (
+    id NUMBER PRIMARY KEY,
+    title VARCHAR2(32) NOT NULL,
+    description VARCHAR2(256) NOT NULL,
+    credits NUMBER(1) NOT NULL,
+    -- UCO uses four characters to identify a subject.
+    subject CHAR(4) NOT NULL
+);
+
+CREATE TABLE section (
+    crn NUMBER PRIMARY KEY,
+    courseid NUMBER NOT NULL,
+    deadline DATE NOT NULL,
+    capacity NUMBER NOT NULL,
+    -- 'DATE' stores time down to the second.
+    -- We'll ignore year, month, and day.
+    begin_time DATE NOT NULL,
+    end_time DATE NOT NULL,
+    FOREIGN KEY (courseid) REFERENCES course
+);
+
+CREATE TABLE enrolled (
+    studentid number,
+    crn number,
+    grade CHAR(1), -- This can be null
+    FOREIGN KEY (studentid) REFERENCES student,
+    FOREIGN KEY (crn) REFERENCES section,
+    PRIMARY KEY (studentid, crn)
+);
+
+CREATE TABLE requires (
+    prerequisite NUMBER,
+    postrequisite NUMBER,
+    FOREIGN KEY (prerequisite) REFERENCES SECTION,
+    FOREIGN KEY (postrequisite) REFERENCES SECTION,
+    PRIMARY KEY (prerequisite, postrequisite)
+);
+
 COMMIT;
