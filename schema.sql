@@ -28,11 +28,9 @@ CREATE TABLE student (
 );
 
 CREATE TABLE myclientsession (
-  sessionid VARCHAR2(32),
-  clientid VARCHAR2(8),
+  sessionid VARCHAR2(32) PRIMARY KEY,
+  clientid VARCHAR2(8) REFERENCES myclient UNIQUE,
   sessiondate DATE NOT NULL,
-  FOREIGN KEY (clientid) references myclient,
-  PRIMARY KEY (sessionid, clientid)
 );
 
 INSERT INTO myclient VALUES ('s','Joe','Student','a',0);
@@ -65,7 +63,7 @@ DROP TABLE enrolled CASCADE CONSTRAINTS;
 DROP TABLE requires CASCADE CONSTRAINTS;
 
 CREATE TABLE course (
-    id NUMBER PRIMARY KEY,
+    id NUMBER(8) PRIMARY KEY,
     title VARCHAR2(32) NOT NULL,
     description VARCHAR2(256) NOT NULL,
     credits NUMBER(1) NOT NULL,
@@ -74,10 +72,10 @@ CREATE TABLE course (
 );
 
 CREATE TABLE section (
-    crn NUMBER PRIMARY KEY,
-    courseid NUMBER NOT NULL,
+    crn NUMBER(8) PRIMARY KEY,
+    courseid NUMBER(8) NOT NULL,
     deadline DATE NOT NULL,
-    capacity NUMBER NOT NULL,
+    capacity NUMBER(8) NOT NULL,
     -- 'DATE' stores time down to the second.
     -- We'll ignore year, month, and day.
     begin_time DATE NOT NULL,
@@ -86,19 +84,15 @@ CREATE TABLE section (
 );
 
 CREATE TABLE enrolled (
-    studentid number,
-    crn number,
+    studentid number REFERENCES student,
+    crn number REFERENCES section,
     grade CHAR(1), -- This can be null
-    FOREIGN KEY (studentid) REFERENCES student,
-    FOREIGN KEY (crn) REFERENCES section,
     PRIMARY KEY (studentid, crn)
 );
 
 CREATE TABLE requires (
-    prerequisite NUMBER,
-    postrequisite NUMBER,
-    FOREIGN KEY (prerequisite) REFERENCES SECTION,
-    FOREIGN KEY (postrequisite) REFERENCES SECTION,
+    prerequisite NUMBER(8) REFERENCES SECTION,
+    postrequisite NUMBER(8) REFERENCES SECTION,
     PRIMARY KEY (prerequisite, postrequisite)
 );
 
