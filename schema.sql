@@ -180,5 +180,22 @@ INSERT INTO section VALUES (12118, '1457', DATE '2021-01-25', 4, 'SP',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
     TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
 
+-- calculus I requires algebra
+INSERT INTO requires VALUES (1453, 1455);
+
+-- calculus I requires trigonometry
+INSERT INTO requires VALUES (1454, 1455);
+
+-- physics requires algebra
+INSERT INTO requires VALUES (1453, 1456);
+
+-- physics requires trigonometry
+INSERT INTO requires VALUES (1454, 1456);
+
+-- physics lab requires algebra
+INSERT INTO requires VALUES (1453, 1457);
+
+-- physics lab requires trigonometry
+INSERT INTO requires VALUES (1454, 1457);
 
 COMMIT;
