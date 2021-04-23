@@ -22,23 +22,23 @@ CREATE TABLE student (
     city VARCHAR2(30) NOT NULL,
     street VARCHAR2(30) NOT NULL,
     apt_num NUMBER(10),
-    zip NUMBER(9) NOT NULL,
+    zip VARCHAR2(10) NOT NULL,
     clientid VARCHAR2(10) NOT NULL,
-    isgraduate NUMBER(1),
+    isgraduate NUMBER(1) NOT NULL,
     -- This is set to 0 until we implement our trigger
     status NUMBER(1),
     FOREIGN KEY (clientid) REFERENCES myclient ON DELETE CASCADE
 );
 
 CREATE OR REPLACE VIEW v_student_info AS
-SELECT c.clientid, 
-    fname + ' ' +  lname AS name,
+(SELECT c.clientid, 
+    fname || ' ' ||  lname AS name,
     age,
-    street + ' ' + city + ', ' + admin_div + ' ' + zip AS address, 
+    street || ' ' || city || ', ' || admin_div || ' ' || zip AS address, 
     isgraduate,
     status
 FROM myclient c
-LEFT JOIN student s on c.clientid = s.clientid;
+LEFT JOIN student s on c.clientid = s.clientid);
 
 CREATE TABLE myclientsession (
   sessionid VARCHAR2(32) PRIMARY KEY,
@@ -47,24 +47,24 @@ CREATE TABLE myclientsession (
 );
 
 INSERT INTO myclient VALUES ('js1234','Joe','Student','a',0);
-INSERT INTO student VALUES (student_id_seq.nextval, 25, 'United States', 'Oklahoma', 'Edmond', '500 Made-up Dr', NULL, 55555, 'js1234', 0, 0);
+INSERT INTO student VALUES (student_id_seq.nextval, 25, 'United States', 'Oklahoma', 'Edmond', '500 Made-up Dr', NULL, '55555', 'js1234', 0, 0);
 
 INSERT INTO myclient VALUES ('ja1235','Jane','Admin','a',1);
 
 INSERT INTO myclient VALUES ('sp1236','Sheev','Palpatine','a',1);
-INSERT INTO student VALUES (student_id_seq.nextval, 50, 'Canada', 'Ontario', 'Toronto', '501 Made-up Dr', 78, 55575, 'sp1236', 1, 0);
+INSERT INTO student VALUES (student_id_seq.nextval, 50, 'Canada', 'Ontario', 'Toronto', '501 Made-up Dr', 78, '55575', 'sp1236', 1, 0);
 
 INSERT INTO myclient VALUES ('dm1237','Darth','Maul','a',0);
-INSERT INTO student VALUES (student_id_seq.nextval, 45, 'United States', 'Kansas', 'Leawood', '502 Made-up Dr', NULL, 55575, 'dm1237', 0, 0);
+INSERT INTO student VALUES (student_id_seq.nextval, 45, 'United States', 'Kansas', 'Leawood', '502 Made-up Dr', NULL, '55575', 'dm1237', 0, 0);
 
 INSERT INTO myclient VALUES ('dv1238','Darth','Vader','a',0);
-INSERT INTO student VALUES (student_id_seq.nextval, 40, 'United States', 'Kansas', 'Leawood', '503 Made-up Dr', NULL, 55575, 'dv1238', 0, 0);
+INSERT INTO student VALUES (student_id_seq.nextval, 40, 'United States', 'Kansas', 'Leawood', '503 Made-up Dr', NULL, '55575', 'dv1238', 0, 0);
 
 INSERT INTO myclient VALUES ('db1239','Darth','Bane','a',0);
-INSERT INTO student VALUES (student_id_seq.nextval, 35, 'United States', 'Kansas', 'Leawood', '504 Made-up Dr', NULL, 55575, 'db1239', 0, 1);
+INSERT INTO student VALUES (student_id_seq.nextval, 35, 'United States', 'Kansas', 'Leawood', '504 Made-up Dr', NULL, '55575', 'db1239', 0, 1);
 
 INSERT INTO myclient VALUES ('dz1240','Darth','Zannah','a',0);
-INSERT INTO student VALUES (student_id_seq.nextval, 30, 'United States', 'Kansas', 'Leawood', '505 Made-up Dr', NULL, 55575, 'dz1240', 0, 0);
+INSERT INTO student VALUES (student_id_seq.nextval, 30, 'United States', 'Kansas', 'Leawood', '505 Made-up Dr', NULL, '55575', 'dz1240', 0, 0);
 
 INSERT INTO myclient VALUES ('at1241','Ahsoka','Tano','a',1);
 
