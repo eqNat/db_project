@@ -166,7 +166,7 @@ INSERT INTO section VALUES (10118, '1456', DATE '2021-01-25', 4, 'SP',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
     TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
 
-INSERT INTO course VALUES (1457, 'Physics Lab', 'Learn about Physics Lab', 3, 'PHYS');
+INSERT INTO course VALUES (1457, 'Physics Lab', 'Learn about Physics Lab', 1, 'PHYS');
 INSERT INTO section VALUES (12109, '1457', DATE '2021-08-25', 4, 'FA',
     TO_DATE('2000/01/01 9:00:00', 'yyyy/mm/dd hh24:mi:ss'),
     TO_DATE('2000/01/01 9:55:00', 'yyyy/mm/dd hh24:mi:ss'));
