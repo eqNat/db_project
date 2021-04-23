@@ -3,13 +3,47 @@ include "utility_functions.php";
 include "verifysession.php";
 
 // Verify where we are from, employee.php or  emp_update_action.php.
-if (!isset($_POST["update_fail"])) { // from employee.php
-  // Fetch the record to be updated.
-  $q_eid = $_GET["eid"];
+ $q_eid = $_GET["eid"];
+////////////////////////////////  Summary Section  ////////////////////////////////
+//  total number of courses completed,
+//   total credit hours earned, 
+//   and the GPA
+ // the sql string
+ $sql = ''; // get student info view
+ // $sql = "select clientid, fname, lname, isadmin
+ // from myclient where clientid = '$q_eid'";
+
+ $result_array = execute_sql_in_oracle ($sql);
+ $result = $result_array["flag"];
+ $cursor = $result_array["cursor"];
+
+ if ($result == false){
+   display_oracle_error_message($cursor);
+   die("Query Failed.");
+ }
+
+ $values = oci_fetch_array ($cursor);
+ oci_free_statement($cursor);
+
+ $numCoursesComplete = $values[0];
+ $hours = $values[1];
+ $gpa= $values[2];
+
+ echo("
+   <h3>Courses Completed: </h3><p>\"$eid\"</p><br/>
+   <h3>Total Hours: </h3><p>\"$name\"</p>
+   <h3>GPA: </h3><p>\"$age\"</p>
+   "); 
+ 
+oci_free_statement($cursor);
+
+
+////////////////////////////////  Summary Section  ////////////////////////////////
 
   // the sql string
-  $sql = "select clientid, fname, lname, isadmin
-  from myclient where clientid = '$q_eid'";
+  $sql = ''; // get student info view
+  // $sql = "select clientid, fname, lname, isadmin
+  // from myclient where clientid = '$q_eid'";
  
   $result_array = execute_sql_in_oracle ($sql);
   $result = $result_array["flag"];
@@ -20,63 +54,35 @@ if (!isset($_POST["update_fail"])) { // from employee.php
     die("Query Failed.");
   }
 
-  $values = oci_fetch_array ($cursor);
-  oci_free_statement($cursor);
+// Display the query results
+echo "<table border=1>";
+echo ("<tr> 
+  <th>Section Id</th> 
+  <th>Number</th>
+  <th>Title</th>
+  <th>Semester</th>
+  <th>Credits</th> 
+  <th>Grade</th>
+</tr>");
 
+// Fetch the result from the cursor one by one
+while ($values = oci_fetch_array ($cursor)){
   $eid = $values[0];
-  $fname = $values[1];
-  $lname = $values[2];
-  $isadmin = $values[3];
+  $number = $values[1];
+  $title = $values[2];
+  $semester = $values[3];
+  $credits = $values[4];
+  $grade = $values[4];
+
+  echo("<tr>
+    <td>$eid</td>
+    <td>$number</td>
+    <td>$title</td>
+    <td>$semester</td>
+    <td>$credits</td>
+    <td>$grade</td>
+    </tr>");
 }
-else { // from emp_update_action.php
-  // Obtain values of the record to be updated directly.
-  $eid = $values[0];
-  $fname = $values[1];
-  $lname = $values[2];
-  $isstudent = '';
-  $isadmin = '';
-  
-  if(isset($_POST['isstudent']))
-    {
-      $isstudent = 1;
-    }
-  
-    if(isset($_POST['isadmin']) )
-    {
-      $isadmin = 1;
-    }
-}
-
-// Display the record to be updated.
-echo("
-  <form method=\"post\" action=\"user_update_action.php\">
-  Id (Read-only): <input type=\"text\" readonly value = \"$eid\" size=\"10\" maxlength=\"10\" name=\"eid\"> <br /> 
-  Firstname (Required): <input type=\"text\" value = \"$fname\" size=\"20\" maxlength=\"30\" name=\"fname\">  <br />
-  Lastname (Required): <input type=\"text\" value = \"$lname\" size=\"20\" maxlength=\"30\" name=\"lname\">  <br />
-  age (Required): <input type=\"text\" value = \"$lname\" size=\"20\" maxlength=\"30\" name=\"lname\">  <br />
-  age (Required): <input type=\"text\" value = \"$lname\" size=\"20\" maxlength=\"30\" name=\"lname\">  <br />
-  Student (Required): <input type=\"checkbox\" "); 
-  
-  if($isstudent ==1){
-    echo(" checked ");
-  }
-  
-  echo(" name=\"isstudent\" >  <br />
-  Admin (Required): <input type=\"checkbox\" ");
-
-  if($isadmin ==1){
-    echo(" checked ");
-  }
-  
-  echo(" name=\"isadmin\" >  <br />");
-
-echo("
-  <input type=\"submit\" value=\"Update\">
-  <input type=\"reset\" value=\"Reset to Original Value\">
-  </form>
-
-  <form method=\"post\" action=\"user_management.php\">
-  <input type=\"submit\" value=\"Go Back\">
-  </form>
-  ");
+oci_free_statement($cursor);
+echo "</table>";
 ?>
