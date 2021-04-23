@@ -33,13 +33,13 @@ include "verifysession.php";
     <h3>ID: </h3><p>\"$eid\"</p><br/>
     <h3>Name: </h3><p>\"$name\"</p>
     <h3>Age: </h3><p>\"$age\"</p>
-    <h3>Age: </h3><p>\"$address\"</p>
+    <h3>Address: </h3><p>\"$address\"</p>
     <h3>Type: </h3><p>\"$type\"</p>
     <h3>Status: </h3><p>\"$status\"</p>
     "); 
   
     echo("
-    <form method=\"post\" action=\"user_management.php\">
+    <form method=\"post\" action=\"welcomepage.php\">
     <input type=\"submit\" value=\"Go Back\">
     </form>
   ");

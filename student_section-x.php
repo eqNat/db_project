@@ -27,12 +27,12 @@ include "verifysession.php";
 
  $numCoursesComplete = $values[0];
  $hours = $values[1];
- $gpa= $values[2];
+ $gpa = $values[2];
 
  echo("
-   <h3>Courses Completed: </h3><p>\"$eid\"</p><br/>
-   <h3>Total Hours: </h3><p>\"$name\"</p>
-   <h3>GPA: </h3><p>\"$age\"</p>
+   <h3>Courses Completed: </h3><p>\"$numCoursesComplete\"</p><br/>
+   <h3>Total Hours: </h3><p>\"$hours\"</p>
+   <h3>GPA: </h3><p>\"$gpa\"</p>
    "); 
  
 oci_free_statement($cursor);
@@ -74,13 +74,14 @@ while ($values = oci_fetch_array ($cursor)){
   $credits = $values[4];
   $grade = $values[4];
 
-  echo("<tr>
-    <td>$eid</td>
-    <td>$number</td>
-    <td>$title</td>
-    <td>$semester</td>
-    <td>$credits</td>
-    <td>$grade</td>
+  echo("
+    <tr>
+      <td>$eid</td>
+      <td>$number</td>
+      <td>$title</td>
+      <td>$semester</td>
+      <td>$credits</td>
+      <td>$grade</td>
     </tr>");
 }
 oci_free_statement($cursor);
