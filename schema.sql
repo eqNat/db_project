@@ -93,8 +93,8 @@ CREATE TABLE enrolled (
 );
 
 CREATE TABLE requires (
-    prerequisite NUMBER(8) REFERENCES SECTION,
-    postrequisite NUMBER(8) REFERENCES SECTION,
+    prerequisite NUMBER(4) REFERENCES COURSE,
+    postrequisite NUMBER(4) REFERENCES COURSE,
     PRIMARY KEY (prerequisite, postrequisite)
 );
 
