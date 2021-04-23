@@ -33,27 +33,27 @@ CREATE TABLE myclientsession (
   sessiondate DATE NOT NULL,
 );
 
-INSERT INTO myclient VALUES ('s','Joe','Student','a',0);
+INSERT INTO myclient VALUES ('js1234','Joe','Student','a',0);
 INSERT INTO student VALUES (student_id_seq.nextval, 25, 'United States', 'Oklahoma', 'Edmond', '500 Made-up Dr', NULL, 55555, 's');
 
-INSERT INTO myclient VALUES ('a','Jane','Admin','a',1);
+INSERT INTO myclient VALUES ('ja1235','Jane','Admin','a',1);
 
-INSERT INTO myclient VALUES ('sa','Sheev','Palpatine','a',1);
+INSERT INTO myclient VALUES ('sa1236','Sheev','Palpatine','a',1);
 INSERT INTO student VALUES (student_id_seq.nextval, 50, 'Canada', 'Ontario', 'Toronto', '501 Made-up Dr', 78, 55575, 'sa');
 
-INSERT INTO myclient VALUES ('dm','Darth','Maul','a',0);
+INSERT INTO myclient VALUES ('dm1237','Darth','Maul','a',0);
 INSERT INTO student VALUES (student_id_seq.nextval, 45, 'United States', 'Kansas', 'Leawood', '502 Made-up Dr', NULL, 55575, 'dm');
 
-INSERT INTO myclient VALUES ('dv','Darth','Vader','a',0);
+INSERT INTO myclient VALUES ('dv1238','Darth','Vader','a',0);
 INSERT INTO student VALUES (student_id_seq.nextval, 40, 'United States', 'Kansas', 'Leawood', '503 Made-up Dr', NULL, 55575, 'dv');
 
-INSERT INTO myclient VALUES ('db','Darth','Bane','a',0);
+INSERT INTO myclient VALUES ('db1239','Darth','Bane','a',0);
 INSERT INTO student VALUES (student_id_seq.nextval, 35, 'United States', 'Kansas', 'Leawood', '504 Made-up Dr', NULL, 55575, 'db');
 
-INSERT INTO myclient VALUES ('dz','Darth','Zannah','a',0);
+INSERT INTO myclient VALUES ('dz1240','Darth','Zannah','a',0);
 INSERT INTO student VALUES (student_id_seq.nextval, 30, 'United States', 'Kansas', 'Leawood', '505 Made-up Dr', NULL, 55575, 'dz');
 
-INSERT INTO myclient VALUES ('at','Ahsoka','Tano','a',1);
+INSERT INTO myclient VALUES ('at1241','Ahsoka','Tano','a',1);
 
 -- Course and Section part
 
