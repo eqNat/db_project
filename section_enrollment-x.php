@@ -27,12 +27,13 @@ if (isset($q_cnumber) and $q_cnumber != "") {
   $whereClause .= " and UPPER(lname) like '%$q_cnumber%'"; 
 }
 
-
 // Form the query statement and run it.
-$sql = "select myclient.clientid, fname, lname, isadmin, password, studentid
-  from myclient " .
-  "left join student on myclient.clientid = student.clientid " .
-  "where $whereClause order by myclient.clientid";
+$sql = "";
+
+// "select myclient.clientid, fname, lname, isadmin, password, studentid
+//   from myclient " .
+//   "left join student on myclient.clientid = student.clientid " .
+//   "where $whereClause order by myclient.clientid";
 
 $result_array = execute_sql_in_oracle ($sql);
 $result = $result_array["flag"];

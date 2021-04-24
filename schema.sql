@@ -101,13 +101,13 @@ CREATE TABLE section (
 CREATE TABLE enrolled (
     studentid number REFERENCES student,
     crn number REFERENCES section,
-    grade CHAR(1), -- This can be null
+    grade NUMBER(1), -- This can be null. Let's go with 0-4 to make this easier
     PRIMARY KEY (studentid, crn)
 );
 
 CREATE TABLE requires (
-    prerequisite NUMBER(8) REFERENCES SECTION,
-    postrequisite NUMBER(8) REFERENCES SECTION,
+    prerequisite NUMBER(4) REFERENCES COURSE,
+    postrequisite NUMBER(4) REFERENCES COURSE,
     PRIMARY KEY (prerequisite, postrequisite)
 );
 
@@ -193,5 +193,40 @@ INSERT INTO section VALUES (12118, '1457', DATE '2021-01-25', 4, 'SP',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
     TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
 
+-- calculus I requires algebra
+INSERT INTO requires VALUES (1453, 1455);
+
+-- calculus I requires trigonometry
+INSERT INTO requires VALUES (1454, 1455);
+
+-- physics requires algebra
+INSERT INTO requires VALUES (1453, 1456);
+
+-- physics requires trigonometry
+INSERT INTO requires VALUES (1454, 1456);
+
+-- physics lab requires algebra
+INSERT INTO requires VALUES (1453, 1457);
+
+-- physics lab requires trigonometry
+INSERT INTO requires VALUES (1454, 1457);
+
+
+CREATE OR REPLACE VIEW v_student_info AS
+(SELECT c.clientid, 
+    fname || ' ' ||  lname AS name,
+    age,
+    street || ' ' || city || ', ' || admin_div || ' ' || zip AS address, 
+    isgraduate,
+    status
+FROM myclient c
+JOIN student s on c.clientid = s.clientid);
+
+CREATE OR REPLACE VIEW v_student_section AS
+(
+SELECT e.studentid, e.crn, courseid, title, semester, credits, grade
+FROM course c 
+JOIN section s on s.courseid = c.id
+JOIN enrolled e on e.crn = s.crn);
 
 COMMIT;
