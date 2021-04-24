@@ -30,6 +30,16 @@ CREATE TABLE student (
     FOREIGN KEY (clientid) REFERENCES myclient ON DELETE CASCADE
 );
 
+CREATE OR REPLACE VIEW v_student_info AS
+(SELECT c.clientid, 
+    fname || ' ' ||  lname AS name,
+    age,
+    street || ' ' || city || ', ' || admin_div || ' ' || zip AS address, 
+    isgraduate,
+    status
+FROM myclient c
+LEFT JOIN student s on c.clientid = s.clientid);
+
 CREATE TABLE myclientsession (
   sessionid VARCHAR2(32) PRIMARY KEY,
   clientid VARCHAR2(8) REFERENCES myclient UNIQUE,
