@@ -91,7 +91,7 @@ CREATE TABLE section (
 CREATE TABLE enrolled (
     studentid number REFERENCES student,
     crn number REFERENCES section,
-    grade CHAR(1), -- This can be null
+    grade NUMBER(1), -- This can be null. Let's go with 0-4 to make this easier
     PRIMARY KEY (studentid, crn)
 );
 

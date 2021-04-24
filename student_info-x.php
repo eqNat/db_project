@@ -6,7 +6,7 @@ include "verifysession.php";
  $q_eid = $_GET["eid"];
 
   // the sql string
-  $sql = ''; // get student info view
+  $sql = "select * from v_student_info where clientid == \"$eid\""; // get student info view
   // $sql = "select clientid, fname, lname, isadmin
   // from myclient where clientid = '$q_eid'";
  
@@ -26,8 +26,13 @@ include "verifysession.php";
   $name = $values[1];
   $age= $values[2];
   $address = $values[3];
-  $type = $values[4];
+  $isGraduate = $values[4];
   $status = $values[5];
+
+  $type = "UnderGraduate";  
+  if($isGraduate == 1){
+    $type = "Graduate";
+  }
 
   echo("
     <h3>ID: </h3><p>\"$eid\"</p><br/>

@@ -9,7 +9,25 @@ include "verifysession.php";
 //   total credit hours earned, 
 //   and the GPA
  // the sql string
- $sql = ''; // get student info view
+ $sql = ("
+ SELECT (SELECT COUNT(*) 
+FROM enrolled 
+WHERE studentid = '$q_eid' 
+AND grade IS NOT NULL) numCourses
+,(SELECT SUM(credits) 
+FROM enrolled e 
+JOIN section s ON e.crn = s.crn 
+JOIN COURSE c on s.courseid = c.id 
+WHERE studentid = '$q_eid' 
+    AND grade IS NOT NULL) numCredits
+,(SELECT (SUM(grade * credits) / SUM(credits))
+FROM enrolled e 
+JOIN section s ON e.crn = s.crn 
+JOIN COURSE c on s.courseid = c.id 
+WHERE studentid = '$q_eid'  )  gpa
+FROM DUAL);");
+ 
+  // get student info view
  // $sql = "select clientid, fname, lname, isadmin
  // from myclient where clientid = '$q_eid'";
 
@@ -41,7 +59,7 @@ oci_free_statement($cursor);
 ////////////////////////////////  Summary Section  ////////////////////////////////
 
   // the sql string
-  $sql = ''; // get student info view
+  $sql = "select * from v_student_section where studentid = '$q_eid' "; // get student info view
   // $sql = "select clientid, fname, lname, isadmin
   // from myclient where clientid = '$q_eid'";
  
