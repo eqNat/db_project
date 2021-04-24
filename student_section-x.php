@@ -9,7 +9,25 @@ include "verifysession.php";
 //   total credit hours earned, 
 //   and the GPA
  // the sql string
- $sql = ''; // get student info view
+ $sql = ("
+ SELECT (SELECT COUNT(*) 
+FROM enrolled 
+WHERE studentid = '$q_eid' 
+AND grade IS NOT NULL) numCourses
+,(SELECT SUM(credits) 
+FROM enrolled e 
+JOIN section s ON e.crn = s.crn 
+JOIN COURSE c on s.courseid = c.id 
+WHERE studentid = '$q_eid' 
+    AND grade IS NOT NULL) numCredits
+,(SELECT (SUM(grade * credits) / SUM(credits))
+FROM enrolled e 
+JOIN section s ON e.crn = s.crn 
+JOIN COURSE c on s.courseid = c.id 
+WHERE studentid = '$q_eid'  )  gpa
+FROM DUAL);");
+ 
+  // get student info view
  // $sql = "select clientid, fname, lname, isadmin
  // from myclient where clientid = '$q_eid'";
 
@@ -27,12 +45,12 @@ include "verifysession.php";
 
  $numCoursesComplete = $values[0];
  $hours = $values[1];
- $gpa= $values[2];
+ $gpa = $values[2];
 
  echo("
-   <h3>Courses Completed: </h3><p>\"$eid\"</p><br/>
-   <h3>Total Hours: </h3><p>\"$name\"</p>
-   <h3>GPA: </h3><p>\"$age\"</p>
+   <h3>Courses Completed: </h3><p>\"$numCoursesComplete\"</p><br/>
+   <h3>Total Hours: </h3><p>\"$hours\"</p>
+   <h3>GPA: </h3><p>\"$gpa\"</p>
    "); 
  
 oci_free_statement($cursor);
@@ -41,7 +59,7 @@ oci_free_statement($cursor);
 ////////////////////////////////  Summary Section  ////////////////////////////////
 
   // the sql string
-  $sql = ''; // get student info view
+  $sql = "select * from v_student_section where studentid = '$q_eid' "; // get student info view
   // $sql = "select clientid, fname, lname, isadmin
   // from myclient where clientid = '$q_eid'";
  
@@ -74,13 +92,14 @@ while ($values = oci_fetch_array ($cursor)){
   $credits = $values[4];
   $grade = $values[4];
 
-  echo("<tr>
-    <td>$eid</td>
-    <td>$number</td>
-    <td>$title</td>
-    <td>$semester</td>
-    <td>$credits</td>
-    <td>$grade</td>
+  echo("
+    <tr>
+      <td>$eid</td>
+      <td>$number</td>
+      <td>$title</td>
+      <td>$semester</td>
+      <td>$credits</td>
+      <td>$grade</td>
     </tr>");
 }
 oci_free_statement($cursor);

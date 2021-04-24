@@ -4,11 +4,11 @@ include "verifysession.php";
 
 echo("
   <form method=\"post\" action=\"admin_grade_edit_action.php\">
-  Student ID (Required): <input type=\"text\" value = \"$fname\" size=\"20\" maxlength=\"30\" name=\"fname\">  <br />
-  Section ID (Required): <input type=\"text\" value = \"$lname\" size=\"20\" maxlength=\"30\" name=\"lname\">  <br />
-  Grade (Required): <input type=\"text\" value = \"$lname\" size=\"20\" maxlength=\"30\" name=\"lname\">  <br />
+  Student ID (Required): <input type=\"text\" value = \"\" size=\"20\" maxlength=\"30\" name=\"studentId\">  <br />
+  Section ID (Required): <input type=\"text\" value = \"\" size=\"20\" maxlength=\"30\" name=\"sectionId\">  <br />
+  Grade (Required): <input type=\"text\" value = \"\" size=\"20\" maxlength=\"30\" name=\"grade\">  <br />
 "); 
-  
+
 echo("
   <input type=\"submit\" value=\"Update\">
   <input type=\"reset\" value=\"Reset to Original Value\">

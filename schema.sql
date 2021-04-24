@@ -30,16 +30,6 @@ CREATE TABLE student (
     FOREIGN KEY (clientid) REFERENCES myclient ON DELETE CASCADE
 );
 
-CREATE OR REPLACE VIEW v_student_info AS
-(SELECT c.clientid, 
-    fname || ' ' ||  lname AS name,
-    age,
-    street || ' ' || city || ', ' || admin_div || ' ' || zip AS address, 
-    isgraduate,
-    status
-FROM myclient c
-LEFT JOIN student s on c.clientid = s.clientid);
-
 CREATE TABLE myclientsession (
   sessionid VARCHAR2(32) PRIMARY KEY,
   clientid VARCHAR2(8) REFERENCES myclient UNIQUE,
@@ -101,7 +91,7 @@ CREATE TABLE section (
 CREATE TABLE enrolled (
     studentid number REFERENCES student,
     crn number REFERENCES section,
-    grade CHAR(1), -- This can be null
+    grade NUMBER(1), -- This can be null. Let's go with 0-4 to make this easier
     PRIMARY KEY (studentid, crn)
 );
 
@@ -210,5 +200,23 @@ INSERT INTO requires VALUES (1453, 1457);
 
 -- physics lab requires trigonometry
 INSERT INTO requires VALUES (1454, 1457);
+
+
+CREATE OR REPLACE VIEW v_student_info AS
+(SELECT c.clientid, 
+    fname || ' ' ||  lname AS name,
+    age,
+    street || ' ' || city || ', ' || admin_div || ' ' || zip AS address, 
+    isgraduate,
+    status
+FROM myclient c
+JOIN student s on c.clientid = s.clientid);
+
+CREATE OR REPLACE VIEW v_student_section AS
+(
+SELECT e.studentid, e.crn, courseid, title, semester, credits, grade
+FROM course c 
+JOIN section s on s.courseid = c.id
+JOIN enrolled e on e.crn = s.crn);
 
 COMMIT;
