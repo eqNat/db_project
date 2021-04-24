@@ -1,0 +1,60 @@
+<?
+// include the verification PHP script
+include "utility_functions.php";
+include "verifysession.php";
+?>
+
+<form method="post" action="table.html">
+ <label for="semester">Choose a semester:</label>
+<select name="semester" id="semester">
+<?php
+$sql = "select distinct extract(year from deadline) as year, semester from section order by year";
+ 
+$result_array = execute_sql_in_oracle ($sql);
+$result = $result_array["flag"];
+$cursor = $result_array["cursor"];
+ 
+if ($result == false){
+  display_oracle_error_message($cursor);
+  die("Client Query Failed.") ;
+}
+ 
+// Fetch the result from the cursor one by one
+while ($values = oci_fetch_array ($cursor)){
+  $semester = "$values[0]" . " $values[1]";
+  echo "<option value=$semester>$semester</option>";
+} 
+
+oci_free_statement($cursor);
+
+echo "</select><br><br>";
+echo "<label for=\"subject\">Choose a subject:</label>";
+echo "<select name=\"subject\" id=\"subject\">";
+
+$sql = "select distinct subject from course";
+$result_array = execute_sql_in_oracle ($sql);
+$result = $result_array["flag"];
+$cursor = $result_array["cursor"];
+ 
+if ($result == false){
+  display_oracle_error_message($cursor);
+  die("Client Query Failed.") ;
+}
+ 
+// Fetch the result from the cursor one by one
+while ($values = oci_fetch_array ($cursor)){
+  $subject = $values[0];
+  echo "<option value=$subject>$subject</option>";
+} 
+
+oci_free_statement($cursor);
+
+?>
+</select>
+<br>
+   <input type="submit" name="Submit" value="search" />
+  </form>
+  <br/>
+  <form method="post" action="welcomepage.php">
+   <input type="submit" value="Go Back">
+</form>
