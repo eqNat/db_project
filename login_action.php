@@ -2,7 +2,7 @@
 
 session_start();
 
-include "utility_functions.php";
+require_once "utility_functions.php";
 
 // Get the client id and password and verify them
 $clientid = $_POST["clientid"];

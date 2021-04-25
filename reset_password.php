@@ -1,6 +1,6 @@
 <?
-include "utility_functions.php";
-include "verifysession.php";
+require_once "utility_functions.php";
+require_once "verifysession.php";
 
 // Verify where we are from, employee.php or  emp_update_action.php.
 if (!isset($_POST["reset_fail"])) { // from employee.php

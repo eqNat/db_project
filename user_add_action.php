@@ -1,6 +1,6 @@
 <?php
-include "utility_functions.php";
-include "verifysession.php";
+require_once "utility_functions.php";
+require_once "verifysession.php";
 
 // Suppress PHP auto warnings.
 ini_set("display_errors", 0);

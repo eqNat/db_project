@@ -1,6 +1,6 @@
 <?
-include "utility_functions.php";
-include "verifysession.php";
+require_once "utility_functions.php";
+require_once "verifysession.php";
 
 $q_eid = $_GET["eid"];
 
