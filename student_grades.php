@@ -1,6 +1,6 @@
 <?
-include "utility_functions.php";
-include "verifysession.php";
+require_once "utility_functions.php";
+require_once "verifysession.php";
 
 // Verify where we are from, employee.php or  emp_update_action.php.
  $q_eid = $_GET["eid"];
@@ -105,6 +105,7 @@ while ($values = oci_fetch_array ($cursor)){
 }
 oci_free_statement($cursor);
 echo "</table>";
+<<<<<<< HEAD:student_grades.php
 
 
 echo("
@@ -114,3 +115,6 @@ echo("
 </form>
 ");
 ?>
+=======
+?>
+>>>>>>> main:student_section-x.php

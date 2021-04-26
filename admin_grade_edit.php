@@ -1,6 +1,6 @@
 <?
-include "utility_functions.php";
-include "verifysession.php";
+require_once "utility_functions.php";
+require_once "verifysession.php";
 
 echo("
   <form method=\"post\" action=\"admin_grade_edit_action.php\">

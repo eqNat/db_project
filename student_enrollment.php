@@ -1,6 +1,6 @@
 <?
-include "verifysession.php";
-include "utility_functions.php";
+require_once "verifysession.php";
+require_once "utility_functions.php";
 
 // if ($isadmin == 0) {
 //     die("Error: only administrators can view this page.");

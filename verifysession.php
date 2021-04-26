@@ -1,4 +1,6 @@
 <?
+require_once "utility_functions.php";
+
 session_start();
 $sessionid = session_id();;
 
@@ -8,7 +10,7 @@ $lname = "";
 $isadmin = 0;
 $isstudent = 0; 
 
-$connection = oci_connect ("gq024", "ycanmf", "gqiannew2:1521/pdborcl");
+$connection = oci_connect_local();
 
 if($connection == false){
   $e = oci_error(); 

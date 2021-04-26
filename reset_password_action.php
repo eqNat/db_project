@@ -1,5 +1,5 @@
 <?
-include "utility_functions.php";
+require_once "utility_functions.php";
 
 $eid =$_GET["eid"];
 

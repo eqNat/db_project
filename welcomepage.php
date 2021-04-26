@@ -1,6 +1,7 @@
   <?
 // include the verification PHP script
-include "verifysession.php";
+require_once "verifysession.php";
+require_once "utility_functions.php";
 
 // here we can generate the content of the welcome page
 
