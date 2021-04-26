@@ -7,6 +7,8 @@ if ($isadmin == 0) {
 }
 
 echo("
+<link rel=\"stylesheet\" type=\"text/css\" href=\"tablestyle.css\">
+<h3>Student Search</h3>
   <form method=\"post\" action=\"user_management.php\">
   Id: <input type=\"text\" size=\"10\" maxlength=\"10\" name=\"q_id\"> 
   First Name: <input type=\"text\" size=\"20\" maxlength=\"30\" name=\"q_fname\"> 
@@ -61,8 +63,8 @@ if ($result == false){
 }
 
 // Display the query results
-echo "<table border=1>";
-echo "<tr> <th>Id</th> <th>Firstname</th> <th>Lastname</th> <th>Student ID</th> <th>Admin</th> <th>Update</th> <th>Delete</th> <th>Password Reset</th> <th>Password</th> </tr>";
+echo "<table class=\"blueTable\">";
+echo "<thead><tr> <th>Id</th> <th>Firstname</th> <th>Lastname</th> <th>Student ID</th> <th>Admin</th> <th>Update</th> <th>Delete</th> <th>Password Reset</th> <th>Password</th> </tr></thead>";
 
 // Fetch the result from the cursor one by one
 while ($values = oci_fetch_array ($cursor)){

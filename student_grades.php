@@ -25,8 +25,8 @@ FROM enrolled e
 JOIN section s ON e.crn = s.crn 
 JOIN COURSE c on s.courseid = c.id 
 WHERE studentid = '$q_eid'  )  gpa
-FROM DUAL);");
- 
+FROM DUAL");
+
   // get student info view
  // $sql = "select clientid, fname, lname, isadmin
  // from myclient where clientid = '$q_eid'";
@@ -43,23 +43,24 @@ FROM DUAL);");
  $values = oci_fetch_array ($cursor);
  oci_free_statement($cursor);
 
- $numCoursesComplete = $values[0];
- $hours = $values[1];
- $gpa = $values[2];
+ $studentid = is_null($values[0]) ? "NA" : $values[0];
+
+ $numCoursesComplete = is_null($values[0]) ? "NA" : $values[0];
+ $hours = is_null($values[1]) ? "NA" : $values[1];
+ $gpa = is_null($values[2]) ? "NA" : $values[2];
 
  echo("
-   <h3>Courses Completed: </h3><p>\"$numCoursesComplete\"</p><br/>
-   <h3>Total Hours: </h3><p>\"$hours\"</p>
-   <h3>GPA: </h3><p>\"$gpa\"</p>
+ <div style=\"display:flex;align-items:center\"><h3 style=\"margin:5\">Courses Completed: </h3><p style=\"margin:5\">$numCoursesComplete</p></div>
+ <div style=\"display:flex;align-items:center\"><h3 style=\"margin:5\">Total Hours: </h3><p style=\"margin:5\">$hours</p></div>
+ <div style=\"display:flex;align-items:center\"><h3 style=\"margin:5\">GPA: </h3><p style=\"margin:5\">$gpa</p></div>
    "); 
  
 oci_free_statement($cursor);
 
-
 ////////////////////////////////  Summary Section  ////////////////////////////////
 
   // the sql string
-  $sql = "select * from v_student_section where studentid = '$q_eid' "; // get student info view
+  $sql = "select * from v_student_section where studentid = '$q_eid'"; // get student info view
   // $sql = "select clientid, fname, lname, isadmin
   // from myclient where clientid = '$q_eid'";
  
@@ -104,4 +105,12 @@ while ($values = oci_fetch_array ($cursor)){
 }
 oci_free_statement($cursor);
 echo "</table>";
+
+
+echo("
+<br/>
+<form method=\"post\" action=\"welcomepage.php\">
+<input type=\"submit\" value=\"Go Back\">
+</form>
+");
 ?>
