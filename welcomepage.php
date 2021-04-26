@@ -15,29 +15,24 @@ echo("Logged in as $fname $lname<br/>");
 }
 
 if ($isadmin == 1){
-echo("
-<br/><br/>Admin<br/>  Click here to <a href='user_management.php' tite='Logout'>Administer Students</a>
-");
+  echo("
+  <br/><br/>Admin<br/>  Click here to <a href='user_management.php' tite='Logout'>Administer Students</a>
+  ");
 }
 if ($isstudent == 1) {
 
-echo ("
-<br/><br/>Student<br/> Click here to <a href='table.html' tite='Logout'>View Grades</a>
+  echo ("
+  <br/><br/>Student<br/> Click here to <a href='student_grades.php' tite='Logout'>View Grades</a>
     ");
-echo "<br/><br/> Click here to <a href='class_lookup.html' tite='Logout'>Lookup Classes</a>";
+  echo "<br/><br/> Click here to <a href='class_lookup.html' tite='Logout'>Lookup Classes</a>";
   
   echo ("
-  <br/><br/>Student<br/> Click here to <a href='student_info.php'>My Info</a>
+  <br/><br/>Click here to <a href='student_info.php'>My Info</a>
   ");
   
   echo ("
-  <br/><br/>Student<br/> Click here to <a href='student_section.php'>My Grades</a>
+  <br/><br/>Click here to <a href='student_enrollment.php'>Enroll in Classes</a>
   ");
-  
-  echo ("
-  <br/><br/>Student<br/> Click here to <a href='student_enrollment.php'>Enroll in Classes</a>
-  ");
-
 }
 
 echo("

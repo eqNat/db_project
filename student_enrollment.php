@@ -2,9 +2,9 @@
 require_once "verifysession.php";
 require_once "utility_functions.php";
 
-if ($isadmin == 0) {
-    die("Error: only administrators can view this page.");
-}
+// if ($isadmin == 0) {
+//     die("Error: only administrators can view this page.");
+// }
 
 echo("
   <form method=\"post\" action=\"user_management.php\">
@@ -15,8 +15,8 @@ echo("
   "); 
 
 //Interpret the query requirements
-$q_semester = $_POST["q_semester"];
-$q_cnumber = strtoupper ($_POST["q_cnumber"]);
+//$q_semester = $_POST["q_semester"];
+//$q_cnumber = strtoupper ($_POST["q_cnumber"]);
 $whereClause = " 1 = 1 ";
 
 if (isset($q_semester) and $q_semester != "") { 
@@ -28,12 +28,39 @@ if (isset($q_cnumber) and $q_cnumber != "") {
 }
 
 // Form the query statement and run it.
-$sql = "";
+//Interpret the query requirements
+$q_id = $_POST["q_id"];
+$q_fname = strtoupper ($_POST["q_fname"]);
+$q_lname = strtoupper ($_POST["q_lname"]);
+$q_student = $_POST["q_student"];
+$q_admin = $_POST["q_admin"];
+$whereClause = " 1 = 1 ";
 
-// "select myclient.clientid, fname, lname, isadmin, password, studentid
-//   from myclient " .
-//   "left join student on myclient.clientid = student.clientid " .
-//   "where $whereClause order by myclient.clientid";
+if (isset($q_id) and trim($q_id) != "") { 
+  $whereClause .= " and myclient.clientid = '$q_id'"; 
+}
+
+if (isset($q_fname) and $q_fname != "") { 
+  $whereClause .= " and UPPER(fname) like '%$q_fname%'"; 
+}
+
+if (isset($q_lname) and $q_lname != "") { 
+  $whereClause .= " and UPPER(lname) like '%$q_lname%'"; 
+}
+
+if (isset($q_student)) { 
+  $whereClause .= " and studentid IS NOT NULL"; 
+}
+
+if (isset($q_admin)) { 
+  $whereClause .= " and isadmin = 1"; 
+}
+
+// Form the query statement and run it.
+$sql = "select myclient.clientid, fname, lname, isadmin, password, studentid
+  from myclient " .
+  "left join student on myclient.clientid = student.clientid " .
+  "where $whereClause order by myclient.clientid";
 
 $result_array = execute_sql_in_oracle ($sql);
 $result = $result_array["flag"];

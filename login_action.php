@@ -79,4 +79,3 @@ if($values = oci_fetch_array ($cursor)){
     exit();
 } 
 ?>
-
