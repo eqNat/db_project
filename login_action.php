@@ -70,7 +70,7 @@ if($values = oci_fetch_array ($cursor)){
       }
       // insert OK - we have created a new session
   }
-  header("Location:welcomepage.php?eid=");
+  header("Location:welcomepage.php");
   exit();
 } else { 
   // client username not found
