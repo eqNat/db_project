@@ -31,7 +31,7 @@ if ($isstudent == 1) {
   ");
   
   echo ("
-  <br/><br/>Click here to <a href='student_enrollment.php'>Enroll in Classes</a>
+  <br/><br/>Click here to <a href='student_enrollment.html'>Enroll in Classes</a>
   ");
 }
 

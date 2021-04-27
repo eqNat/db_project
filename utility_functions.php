@@ -2,7 +2,7 @@
 // Contains commonly used functions.
 
 function oci_connect_local() {
-  $connection = oci_connect ("gq024", "dugnbw", "gqiannew2:1521/pdborcl");
+  $connection = oci_connect ("gq024", "ycanmf", "gqiannew2:1521/pdborcl");
   if($connection == false){
     // failed to connect
     display_oracle_error_message(null);
