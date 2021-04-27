@@ -2,15 +2,12 @@
 require_once "utility_functions.php";
 require_once "verifysession.php";
 
-// Suppress PHP auto warnings.
-ini_set("display_errors", 0);
-
 try
 {// Add user to database
     $connection = oci_connect_local();
 
     {// Insert myclient record
-        $sql_myclient = "insert into myclient values(
+        $sql_myclient = "select * into myclient values(
                          :clientid,
                          :fname,
                          :lname,
