@@ -10,7 +10,7 @@ try
     $connection = oci_connect_local();
 
     {// Insert myclient record
-        $sql_myclient = "insert into myclient values(
+        $sql_myclient = "insert * into myclient values(
                          :clientid,
                          :fname,
                          :lname,

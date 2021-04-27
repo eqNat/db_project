@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+}
+th {
+  text-align: left;
+}
+</style>
+</head>
+<body>
+
+<?php
+require_once "utility_functions.php";
+require_once "verifysession.php";
+           
+// Suppress PHP auto warnings.    
+ini_set("display_errors", 0);                 
+                                                   
+try      
+{// Add user to database    
+    $connection = oci_connect_local();                       
+
+    $sql = "select c.title, c.description, c.credits,"
+         . " s.crn, s.deadline,"
+         . " extract(hour from s.begin_time),"
+         . " extract(minute from s.begin_time),"
+         . " extract(hour from s.end_time),"
+         . " extract(minute from s.end_time)"
+         . " from section s join course c on s.courseid = c.id"
+         . " where extract(year from s.deadline) = " . substr($_POST["year"], 0, 4)
+         . " and s.semester = '" . substr($_POST["year"], 5) . "'";
+
+    echo "$sql";
+
+    $result_array = execute_sql_in_oracle($sql);
+
+    $result = $result_array["flag"];
+    $cursor = $result_array["cursor"];
+ 
+    if ($result == false) {
+        display_oracle_error_message($cursor);
+        die("Client Query Failed.");
+    }
+
+    echo "<table style=\"width:100%\">";
+    echo "<tr>";
+    echo "<th>Title</th>";
+    echo "<th>description</th>";
+    echo "<th>credits</th>";
+    echo "<th>crn</th>";
+    echo "<th>deadline</th>";
+    echo "<th>start</th>";
+    echo "<th>end</th>";
+    echo "</tr>";
+
+    while ($array = oci_fetch_array($cursor)) {
+        echo "<tr>";
+        echo "<td>$array[0]</td>";
+        echo "<td>$array[1]</td>";
+        echo "<td>$array[2]</td>";
+        echo "<td>$array[3]</td>";
+        echo "<td>$array[4]</td>";
+        printf("<td>%02d:%02d</td>", $array[5], $array[6]);
+        printf("<td>%02d:%02d</td>", $array[7], $array[8]);
+        echo "</tr>";
+    }
+    echo "</table>";
+    oci_free_statement($cursor);
+}
+catch (Exception $e)
+{
+    $_SESSION['user_add_error'] = $e->getMessage();
+    oci_rollback($connection);
+}
+finally
+{
+    oci_close($connection);
+}
+
+?>
+<form method="post" action="class_table.html">
+    <input type="submit" value="Go Back">
+</form>
+</body>
+</html>

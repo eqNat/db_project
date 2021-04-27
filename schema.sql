@@ -91,10 +91,10 @@ CREATE TABLE section (
     capacity NUMBER(3) NOT NULL,
     -- Accepted values: SP, SU, FA
     semester CHAR(2) NOT NULL,
-    -- 'DATE' stores time down to the second.
+    -- 'TIMESTAMP' stores time down to the second.
     -- We'll ignore year, month, and day.
-    begin_time DATE NOT NULL,
-    end_time DATE NOT NULL,
+    begin_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
     FOREIGN KEY (courseid) REFERENCES course
 );
 

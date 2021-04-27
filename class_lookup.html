@@ -4,11 +4,11 @@ require_once "utility_functions.php";
 require_once "verifysession.php";
 ?>
 
-<form method="post" action="table.html">
- <label for="semester">Choose a semester:</label>
-<select name="semester" id="semester">
+<form method="post" action="class_table.html">
+ <label for="year">Choose a semester:</label>
+<select name="year" id="year">
 <?php
-$sql = "select distinct extract(year from deadline) as year, semester from section order by year";
+$sql = "select distinct extract(year from deadline) as year, semester from section order by year desc";
  
 $result_array = execute_sql_in_oracle ($sql);
 $result = $result_array["flag"];
@@ -21,8 +21,8 @@ if ($result == false){
  
 // Fetch the result from the cursor one by one
 while ($values = oci_fetch_array ($cursor)){
-  $semester = "$values[0]" . " $values[1]";
-  echo "<option value=$semester>$semester</option>";
+  $year = "$values[0]" . "_$values[1]";
+  echo "<option value=$year>$year</option>";
 } 
 
 oci_free_statement($cursor);
