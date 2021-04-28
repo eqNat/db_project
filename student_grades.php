@@ -2,48 +2,44 @@
 require_once "utility_functions.php";
 require_once "verifysession.php";
 
-// Verify where we are from, employee.php or  emp_update_action.php.
- $q_eid = $_GET["eid"];
+if ($isstudent == 0) {
+  die("Error: only students can view this page.");
+}
 ////////////////////////////////  Summary Section  ////////////////////////////////
 //  total number of courses completed,
 //   total credit hours earned, 
 //   and the GPA
  // the sql string
- $sql = ("
- SELECT (SELECT COUNT(*) 
-FROM enrolled 
-WHERE studentid = '$q_eid' 
-AND grade IS NOT NULL) numCourses
-,(SELECT SUM(credits) 
-FROM enrolled e 
-JOIN section s ON e.crn = s.crn 
-JOIN COURSE c on s.courseid = c.id 
-WHERE studentid = '$q_eid' 
-    AND grade IS NOT NULL) numCredits
-,(SELECT (SUM(grade * credits) / SUM(credits))
-FROM enrolled e 
-JOIN section s ON e.crn = s.crn 
-JOIN COURSE c on s.courseid = c.id 
-WHERE studentid = '$q_eid'  )  gpa
-FROM DUAL");
+ $sql = "select count(*)
+         from enrolled e 
+         join section s on e.crn = s.crn 
+         join course c on s.courseid = c.id 
+         where e.studentid = $studentid
+         and e.grade is not null";
 
-  // get student info view
- // $sql = "select clientid, fname, lname, isadmin
- // from myclient where clientid = '$q_eid'";
+echo($sql);
 
+// execute sql
  $result_array = execute_sql_in_oracle ($sql);
  $result = $result_array["flag"];
  $cursor = $result_array["cursor"];
 
- if ($result == false){
+ if ($result == false)
+ {
    display_oracle_error_message($cursor);
    die("Query Failed.");
  }
 
- $values = oci_fetch_array ($cursor);
- oci_free_statement($cursor);
-
- $studentid = is_null($values[0]) ? "NA" : $values[0];
+// test if result returned
+if( ($values = oci_fetch_array($cursor)) != false)
+{
+  oci_free_statement($cursor);
+  echo "Made it here";
+  echo( "<br>$studentid");
+  echo( "<br>$values[0]");
+  
+  
+}
 
  $numCoursesComplete = is_null($values[0]) ? "NA" : $values[0];
  $hours = is_null($values[1]) ? "NA" : $values[1];
@@ -55,12 +51,11 @@ FROM DUAL");
  <div style=\"display:flex;align-items:center\"><h3 style=\"margin:5\">GPA: </h3><p style=\"margin:5\">$gpa</p></div>
    "); 
  
-oci_free_statement($cursor);
 
 ////////////////////////////////  Summary Section  ////////////////////////////////
 
   // the sql string
-  $sql = "select * from v_student_section where studentid = '$q_eid'"; // get student info view
+  $sql = "select * from v_student_section where studentid = '$studentid'"; // get student info view
   // $sql = "select clientid, fname, lname, isadmin
   // from myclient where clientid = '$q_eid'";
  
@@ -68,7 +63,8 @@ oci_free_statement($cursor);
   $result = $result_array["flag"];
   $cursor = $result_array["cursor"];
 
-  if ($result == false){
+  if($result == false)
+  {
     display_oracle_error_message($cursor);
     die("Query Failed.");
   }
@@ -85,7 +81,8 @@ echo ("<tr>
 </tr>");
 
 // Fetch the result from the cursor one by one
-while ($values = oci_fetch_array ($cursor)){
+while ($values = oci_fetch_array ($cursor))
+{
   $eid = $values[0];
   $number = $values[1];
   $title = $values[2];
@@ -105,7 +102,6 @@ while ($values = oci_fetch_array ($cursor)){
 }
 oci_free_statement($cursor);
 echo "</table>";
-<<<<<<< HEAD:student_grades.php
 
 
 echo("
@@ -115,6 +111,3 @@ echo("
 </form>
 ");
 ?>
-=======
-?>
->>>>>>> main:student_section-x.php
