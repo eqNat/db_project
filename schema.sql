@@ -264,4 +264,122 @@ BEGIN
 END;
 /
 
+CREATE OR REPLACE VIEW v_student_section AS
+(
+SELECT e.studentid, e.crn, courseid, title, semester, credits, grade
+FROM course c 
+JOIN section s on s.courseid = c.id
+JOIN enrolled e on e.crn = s.crn);
+
+CREATE OR REPLACE VIEW v_section AS
+(
+    SELECT c.id, c.title, c.description, c.credits, c.subject, s.crn, (s.capacity - COUNT(e.studentid)) remaining,
+    s.deadline, s.capacity, s.semester, s.begin_time, s.end_time
+    FROM section s
+    JOIN course c ON s.courseid = c.id
+    LEFT JOIN enrolled e ON s.crn = e.crn
+    GROUP BY c.id, c.title, c.description, c.credits, c.subject, s.crn, s.capacity, s.deadline, s.semester,
+    s.begin_time, s.end_time
+);
+
+CREATE OR REPLACE VIEW v_completed_courses AS
+(
+    SELECT e.studentid, s.courseid
+    FROM enrolled e
+    JOIN section s ON e.crn = s.crn
+    WHERE e.grade = 2 OR e.grade = 3 OR e.grade = 4
+);
+
+-- Returns 0 on success
+-- Returns error code otherwise
+CREATE OR REPLACE FUNCTION enroll(s_id IN INTEGER, s_crn IN INTEGER)
+RETURN INTEGER
+AS
+    s_rec v_section%rowtype;
+    l_count INTEGER;
+    l_studentid student.studentid%TYPE;
+    l_post requires.postrequisite%TYPE;
+BEGIN
+    SELECT COUNT(*) INTO l_count FROM v_section WHERE crn = s_crn;
+
+    IF l_count = 0 THEN
+        -- Section does not exist
+        RETURN 1;
+    END IF;
+
+    SELECT * INTO s_rec FROM v_section WHERE crn = s_crn;
+
+    IF s_rec.remaining = 0 THEN
+        -- Section at max capacity
+        RETURN 2;
+    END IF;
+
+-- https://stackoverflow.com/questions/42076161/how-to-check-if-a-set-is-a-subset-of-another-set
+
+    -- In the case that nothing is found, I wish this statment would just assign 0 to 'l_count'
+    -- instead of throwing a 'no data found' exception. I don't know why it does this. For now we'll
+    -- tell PHP that if the 'enroll' function throws a 'no data found' exception, then it means it
+    -- meant to return 3.
+    SELECT count (*) INTO l_count
+    FROM v_completed_courses c
+    JOIN requires r ON c.courseid = r.prerequisite
+    WHERE r.postrequisite = s_rec.id AND c.studentid = s_id
+    GROUP BY c.studentid, r.postrequisite
+    HAVING COUNT(*) = (SELECT COUNT(*) FROM requires r2 WHERE r2.postrequisite = r.postrequisite);
+
+    IF l_count = 0 THEN
+        -- Prerequisites are not met
+        RETURN 3;
+    END IF;
+
+    IF s_rec.deadline < SYSDATE THEN
+        -- Past deadline
+        RETURN 4;
+    END IF;
+
+    SELECT COUNT(*) INTO l_count
+    FROM enrolled e
+    JOIN section s ON e.crn = s.crn
+    WHERE e.studentid = s_id
+        AND EXTRACT(YEAR FROM s_rec.deadline) = EXTRACT(YEAR FROM s.deadline)
+        AND s_rec.semester = s.semester
+        AND to_char(s.begin_time, 'hh24mi')
+            BETWEEN to_char(s_rec.begin_time, 'hh24mi') AND to_char(s_rec.end_time, 'hh24mi')
+        OR  to_char(s_rec.begin_time, 'hh24mi')
+            BETWEEN to_char(s.begin_time, 'hh24mi') AND to_char(s.end_time, 'hh24mi');
+
+    IF l_count > 0 THEN
+        -- Section times overlap
+        RETURN 5;
+    END IF;
+
+    SELECT COUNT(*) INTO l_count
+    FROM enrolled e
+    JOIN section s ON e.crn = s.crn
+    WHERE s_id = e.studentid
+        AND s.courseid = s_rec.id
+        AND (e.grade = 'NULL' OR e.grade > 1);
+
+    IF l_count > 0 THEN
+        -- Class is passed or already enrolled for
+        RETURN 5;
+    END IF;
+
+    INSERT INTO enrolled VALUES(s_id, s_crn, NULL);
+
+    RETURN 0;
+END;
+/
+
+SET serveroutput on
+
+-- INSERT INTO enrolled VALUES(2, 20001, 4);
+INSERT INTO enrolled VALUES(2, 10002, 3);
+INSERT INTO enrolled VALUES(2, 10007, 3);
+
+BEGIN
+    dbms_output.put_line(enroll(2, 10104));
+    dbms_output.put_line(enroll(2, 10104));
+END;
+/
 COMMIT;
