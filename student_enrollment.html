@@ -19,9 +19,9 @@
   <?php
 require_once "verifysession.php";
 
-   if (isset($_SESSION["enrollment_error"])) {
-       echo "<p>" . $_SESSION["enrollment_error"] . "</p> <br>";
-       unset($_SESSION["enrollment_error"]);
+   if (isset($_SESSION["enrollment_status"])) {
+       echo "<p>" . $_SESSION["enrollment_status"] . "</p> <br>";
+       unset($_SESSION["enrollment_status"]);
    }
 
   ?>
