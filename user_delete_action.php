@@ -4,6 +4,9 @@ require_once "utility_functions.php";
 
 ini_set( "display_errors", 0);  
 
+if ($isadmin == 0) {
+    die("error: you must be an administrator to enter");
+}
 
 $eid = $_POST["eid"];
 

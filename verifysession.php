@@ -2,7 +2,6 @@
 require_once "utility_functions.php";
 
 session_start();
-// PROPOSAL: replace all instances of '$sessionid' with 'session_id()'
 $sessionid = session_id();
 
 $clientid = "";
@@ -57,7 +56,6 @@ if ($values = oci_fetch_array ($cursor)){
   $lname = $values[2];
   $isadmin = $values[3];
   $isstudent = is_null($values[4]) ? 0 : 1;
-  // PROPOSAL: replace all instances of '$isstudent' to $studentid
   $studentid = is_null($values[4]) ? 0 : $values[4];
 } 
 else { 
