@@ -309,11 +309,6 @@ BEGIN
 
     SELECT * INTO s_rec FROM v_section WHERE crn = s_crn;
 
-    IF s_rec.remaining = 0 THEN
-        -- Section at max capacity
-        RETURN 2;
-    END IF;
-
 -- https://stackoverflow.com/questions/42076161/how-to-check-if-a-set-is-a-subset-of-another-set
 
     -- In the case that nothing is found, I wish this statment would just assign 0 to 'l_count'
@@ -329,12 +324,12 @@ BEGIN
 
     IF l_count = 0 THEN
         -- Prerequisites are not met
-        RETURN 3;
+        RETURN 2;
     END IF;
 
     IF s_rec.deadline < SYSDATE THEN
         -- Past deadline
-        RETURN 4;
+        RETURN 3;
     END IF;
 
     SELECT COUNT(*) INTO l_count
@@ -350,7 +345,7 @@ BEGIN
 
     IF l_count > 0 THEN
         -- Section times overlap
-        RETURN 5;
+        RETURN 4;
     END IF;
 
     SELECT COUNT(*) INTO l_count
@@ -363,6 +358,11 @@ BEGIN
     IF l_count > 0 THEN
         -- Class is passed or already enrolled for
         RETURN 5;
+    END IF;
+
+    IF s_rec.remaining = 0 THEN
+        -- Section at max capacity
+        RETURN 6;
     END IF;
 
     INSERT INTO enrolled VALUES(s_id, s_crn, NULL);
