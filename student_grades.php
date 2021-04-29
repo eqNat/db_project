@@ -105,16 +105,6 @@ while ($values = oci_fetch_array ($cursor)){
 }
 oci_free_statement($cursor);
 echo "</table>";
-<<<<<<< HEAD:student_grades.php
 
 
-echo("
-<br/>
-<form method=\"post\" action=\"welcomepage.php\">
-<input type=\"submit\" value=\"Go Back\">
-</form>
-");
 ?>
-=======
-?>
->>>>>>> main:student_section-x.php

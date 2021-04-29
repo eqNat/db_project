@@ -91,7 +91,4 @@ echo("<br />
     <form method=\"post\" action=\"user_add.html\">
     <input type=\"submit\" value=\"Add A New User\">
     </form>
-    <form method=\"post\" action=\"welcomepage.php\">
-    <input type=\"submit\" value=\"Go Back\">
-    </form> ")
 ?>

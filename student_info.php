@@ -48,10 +48,4 @@ include "verifysession.php";
    <div style=\"display:flex;align-items:center\"><h3 style=\"margin:5\">Status: </h3><p style=\"margin:5\">$stat</p></div>
     "); 
   
-    echo("
-    <br/>
-    <form method=\"post\" action=\"welcomepage.php\">
-    <input type=\"submit\" value=\"Go Back\">
-    </form>
-  ");
 ?>
