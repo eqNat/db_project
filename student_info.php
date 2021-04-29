@@ -2,6 +2,10 @@
 include "utility_functions.php";
 include "verifysession.php";
 
+if ($isstudent == 0) {
+    die("error: you must be an student to enter");
+}
+
 // Verify where we are from, employee.php or  emp_update_action.php.
  $q_eid = $_GET["clientid"];
 

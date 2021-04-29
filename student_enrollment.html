@@ -1,5 +1,9 @@
 <?php
 require_once "verifysession.php";
+
+if ($isstudent == 0) {
+    die("error: you must be a student to enter");
+}
 ?>
 <!DOCTYPE html>
 <html>

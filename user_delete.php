@@ -2,6 +2,10 @@
 require_once "utility_functions.php";
 require_once "verifysession.php";
 
+if ($isadmin == 0) {
+    die("error: you must be an administrator to enter this page");
+}
+
 $q_eid = $_GET["eid"];
 
 // Fetech the record to be deleted and display it

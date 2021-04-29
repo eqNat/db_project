@@ -1,5 +1,9 @@
 <?
 require_once "verifysession.php";
+
+if ($isadmin == 0) {
+    die("error: you must be an administrator to enter");
+}
 ?>
 
 <!DOCTYPE html>

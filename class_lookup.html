@@ -2,6 +2,10 @@
 // include the verification PHP script
 require_once "utility_functions.php";
 require_once "verifysession.php";
+
+if ($isstudent == 0) {
+    die("error: you must be a student to enter");
+}
 ?>
 
 <form method="post" action="class_table.html">

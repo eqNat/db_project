@@ -20,6 +20,10 @@ th {
 <?php
 require_once "utility_functions.php";
 require_once "verifysession.php";
+
+if ($isstudent == 0) {
+    die("you must be a student to enter");
+}
            
 // Suppress PHP auto warnings.    
 ini_set("display_errors", 0);                 
