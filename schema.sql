@@ -14,7 +14,7 @@ CREATE TABLE myclient (
 );
 
 CREATE TABLE student (
-    studentid number PRIMARY KEY,
+    studentid NUMBER PRIMARY KEY,
     age NUMBER(3), -- we can later change this to birthdate
     country VARCHAR2(30) NOT NULL,
     -- state, province, district, etc
@@ -90,8 +90,8 @@ CREATE TABLE section (
 );
 
 CREATE TABLE enrolled (
-    studentid number REFERENCES student,
-    crn number REFERENCES section,
+    studentid NUMBER REFERENCES student,
+    crn NUMBER REFERENCES section,
     grade NUMBER(1), -- This can be null. Let's go with 0-4 to make this easier
     PRIMARY KEY (studentid, crn)
 );
@@ -231,8 +231,8 @@ GROUP BY s.crn,courseid,title,credits,semester,begin_time,capacity);
 CREATE OR REPLACE TRIGGER SetGPA
 AFTER UPDATE ON enrolled 
 DECLARE 
-    theGPA number;
-    sid number(5);
+    theGPA NUMBER;
+    sid NUMBER(5);
     CURSOR c1 IS SELECT studentid FROM enrolled;
 BEGIN
     open c1;
@@ -348,12 +348,9 @@ BEGIN
         OR  to_char(s_rec.begin_time, 'hh24mi')
             BETWEEN to_char(s.begin_time, 'hh24mi') AND to_char(s.end_time, 'hh24mi');
 
-    IF l_count = 1 THEN
+    IF l_count > 0 THEN
         -- Section times overlap
         RETURN 5;
-    ELSIF  l_count > 1 THEN 
-        -- Programming error. This should never occur
-        RETURN 6;
     END IF;
 
     SELECT COUNT(*) INTO l_count
