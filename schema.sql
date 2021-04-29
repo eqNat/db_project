@@ -27,18 +27,9 @@ CREATE TABLE student (
     isgraduate NUMBER(1) NOT NULL,
     -- This is set to 0 until we implement our trigger
     status NUMBER(1),
+    GPA NUMBER,
     FOREIGN KEY (clientid) REFERENCES myclient ON DELETE CASCADE
 );
-
-CREATE OR REPLACE VIEW v_student_info AS
-(SELECT c.clientid, 
-    fname || ' ' ||  lname AS name,
-    age,
-    street || ' ' || city || ', ' || admin_div || ' ' || zip AS address, 
-    isgraduate,
-    status
-FROM myclient c
-LEFT JOIN student s on c.clientid = s.clientid);
 
 CREATE TABLE myclientsession (
   sessionid VARCHAR2(32) PRIMARY KEY,
@@ -47,24 +38,24 @@ CREATE TABLE myclientsession (
 );
 
 INSERT INTO myclient VALUES ('js1234','Joe','Student','a',0);
-INSERT INTO student VALUES (student_id_seq.nextval, 25, 'United States', 'Oklahoma', 'Edmond', '500 Made-up Dr', NULL, '55555', 'js1234', 0, 0);
+INSERT INTO student VALUES (student_id_seq.nextval, 25, 'United States', 'Oklahoma', 'Edmond', '500 Made-up Dr', NULL, '55555', 'js1234', 0, 0,NULL);
 
 INSERT INTO myclient VALUES ('ja1235','Jane','Admin','a',1);
 
 INSERT INTO myclient VALUES ('sp1236','Sheev','Palpatine','a',1);
-INSERT INTO student VALUES (student_id_seq.nextval, 50, 'Canada', 'Ontario', 'Toronto', '501 Made-up Dr', 78, '55575', 'sp1236', 1, 0);
+INSERT INTO student VALUES (student_id_seq.nextval, 50, 'Canada', 'Ontario', 'Toronto', '501 Made-up Dr', 78, '55575', 'sp1236', 1, 0,NULL);
 
 INSERT INTO myclient VALUES ('dm1237','Darth','Maul','a',0);
-INSERT INTO student VALUES (student_id_seq.nextval, 45, 'United States', 'Kansas', 'Leawood', '502 Made-up Dr', NULL, '55575', 'dm1237', 0, 0);
+INSERT INTO student VALUES (student_id_seq.nextval, 45, 'United States', 'Kansas', 'Leawood', '502 Made-up Dr', NULL, '55575', 'dm1237', 0, 0,NULL);
 
 INSERT INTO myclient VALUES ('dv1238','Darth','Vader','a',0);
-INSERT INTO student VALUES (student_id_seq.nextval, 40, 'United States', 'Kansas', 'Leawood', '503 Made-up Dr', NULL, '55575', 'dv1238', 0, 0);
+INSERT INTO student VALUES (student_id_seq.nextval, 40, 'United States', 'Kansas', 'Leawood', '503 Made-up Dr', NULL, '55575', 'dv1238', 0, 0,NULL);
 
 INSERT INTO myclient VALUES ('db1239','Darth','Bane','a',0);
-INSERT INTO student VALUES (student_id_seq.nextval, 35, 'United States', 'Kansas', 'Leawood', '504 Made-up Dr', NULL, '55575', 'db1239', 0, 1);
+INSERT INTO student VALUES (student_id_seq.nextval, 35, 'United States', 'Kansas', 'Leawood', '504 Made-up Dr', NULL, '55575', 'db1239', 0, 1,NULL);
 
 INSERT INTO myclient VALUES ('dz1240','Darth','Zannah','a',0);
-INSERT INTO student VALUES (student_id_seq.nextval, 30, 'United States', 'Kansas', 'Leawood', '505 Made-up Dr', NULL, '55575', 'dz1240', 0, 0);
+INSERT INTO student VALUES (student_id_seq.nextval, 30, 'United States', 'Kansas', 'Leawood', '505 Made-up Dr', NULL, '55575', 'dz1240', 0, 0,NULL);
 
 INSERT INTO myclient VALUES ('at1241','Ahsoka','Tano','a',1);
 
@@ -228,5 +219,49 @@ SELECT e.studentid, e.crn, courseid, title, semester, credits, grade
 FROM course c 
 JOIN section s on s.courseid = c.id
 JOIN enrolled e on e.crn = s.crn);
+
+CREATE OR REPLACE VIEW v_student_enrollment AS
+(
+SELECT s.crn,courseid,title,credits,semester,begin_time,capacity,count(e.crn) enrolled
+FROM course c
+JOIN section s on c.id = s.courseid
+LEFT JOIN enrolled e on s.crn = e.crn
+GROUP BY s.crn,courseid,title,credits,semester,begin_time,capacity);
+
+CREATE OR REPLACE TRIGGER SetGPA
+AFTER UPDATE ON enrolled 
+DECLARE 
+    theGPA number;
+    sid number(5);
+    CURSOR c1 IS SELECT studentid FROM enrolled;
+BEGIN
+    open c1;
+    loop    
+    fetch c1 into sid;
+    EXIT WHEN c1%NOTFOUND;
+
+    SELECT (SUM(e.grade*c.credits)/SUM(c.credits)) INTO theGPA 
+    FROM enrolled e
+    JOIN section s on e.crn = s.crn
+    JOIN course c on c.id = s.courseid
+    WHERE studentid = sid;
+
+    UPDATE student
+    SET gpa = theGPA
+    WHERE studentid = sid;
+
+        IF theGPA < 2.0 then
+            UPDATE student
+            SET status = 1
+            WHERE studentid = sid;
+        ELSE 
+            UPDATE student
+            SET status = 0
+            WHERE studentid = sid;
+        END IF;
+    end loop;
+    close c1;
+END;
+/
 
 COMMIT;
