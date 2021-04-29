@@ -121,8 +121,8 @@ INSERT INTO section VALUES (20001, '1453', DATE '2021-05-24', 3, 'SU',
 
 INSERT INTO course VALUES (1454, 'Trigonometry', 'Learn about Trigonometry', 3, 'MATH');
 INSERT INTO section VALUES (10004, '1454', DATE '2021-08-25', 4, 'FA',
-    TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 12:00:00', 'yyyy/mm/dd hh24:mi:ss'),
+    TO_DATE('2000/01/01 12:55:00', 'yyyy/mm/dd hh24:mi:ss'));
 INSERT INTO section VALUES (10005, '1454', DATE '2021-08-24', 3, 'FA',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
     TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
@@ -297,6 +297,7 @@ RETURN INTEGER
 AS
     s_rec v_section%rowtype;
     l_count INTEGER;
+    l_count2 INTEGER;
     l_studentid student.studentid%TYPE;
     l_post requires.postrequisite%TYPE;
 BEGIN
@@ -309,20 +310,17 @@ BEGIN
 
     SELECT * INTO s_rec FROM v_section WHERE crn = s_crn;
 
--- https://stackoverflow.com/questions/42076161/how-to-check-if-a-set-is-a-subset-of-another-set
+    SELECT COUNT(*) INTO l_count
+    FROM requires
+    WHERE postrequisite = s_rec.id;
 
-    -- In the case that nothing is found, I wish this statment would just assign 0 to 'l_count'
-    -- instead of throwing a 'no data found' exception. I don't know why it does this. For now we'll
-    -- tell PHP that if the 'enroll' function throws a 'no data found' exception, then it means it
-    -- meant to return 3.
-    SELECT count (*) INTO l_count
-    FROM v_completed_courses c
-    JOIN requires r ON c.courseid = r.prerequisite
-    WHERE r.postrequisite = s_rec.id AND c.studentid = s_id
-    GROUP BY c.studentid, r.postrequisite
-    HAVING COUNT(*) = (SELECT COUNT(*) FROM requires r2 WHERE r2.postrequisite = r.postrequisite);
+    SELECT COUNT(*) INTO l_count2
+    FROM v_completed_courses v_c
+    JOIN requires r ON v_c.courseid = r.prerequisite
+    WHERE v_c.studentid = s_id
+        AND r.postrequisite = s_rec.id;
 
-    IF l_count = 0 THEN
+    IF l_count != l_count2 THEN
         -- Prerequisites are not met
         RETURN 2;
     END IF;
@@ -338,10 +336,10 @@ BEGIN
     WHERE e.studentid = s_id
         AND EXTRACT(YEAR FROM s_rec.deadline) = EXTRACT(YEAR FROM s.deadline)
         AND s_rec.semester = s.semester
-        AND to_char(s.begin_time, 'hh24mi')
+        AND (to_char(s.begin_time, 'hh24mi')
             BETWEEN to_char(s_rec.begin_time, 'hh24mi') AND to_char(s_rec.end_time, 'hh24mi')
         OR  to_char(s_rec.begin_time, 'hh24mi')
-            BETWEEN to_char(s.begin_time, 'hh24mi') AND to_char(s.end_time, 'hh24mi');
+            BETWEEN to_char(s.begin_time, 'hh24mi') AND to_char(s.end_time, 'hh24mi'));
 
     IF l_count > 0 THEN
         -- Section times overlap
@@ -375,7 +373,7 @@ SET serveroutput on
 
 -- INSERT INTO enrolled VALUES(2, 20001, 4);
 INSERT INTO enrolled VALUES(2, 10002, 3);
-INSERT INTO enrolled VALUES(2, 10007, 3);
+-- INSERT INTO enrolled VALUES(2, 10007, 3);
 
 BEGIN
     dbms_output.put_line(enroll(2, 10104));
