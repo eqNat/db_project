@@ -67,4 +67,26 @@ else {
 } 
 oci_free_statement($cursor);
 oci_close($connection);
+
+echo("Logged in as $fname $lname<br/>");
+echo ("<nav>");
+
+if ($isadmin == 1){
+  echo("<a href='user_management.php' tite='Logout'>Administer Students</a> | ");
+}
+if ($isstudent == 1) {
+
+  echo ("<a href='student_grades.php' tite='Logout'>View Grades</a> | ");
+  echo "<a href='class_lookup.html' tite='Logout'>Lookup Classes</a> | ";
+  
+  echo ("<a href='student_info.php'>Student Info</a> | ");
+  
+  echo ("<a href='student_enrollment.html'>Enroll</a> | ");
+}
+
+echo("<a href='change_password.html'>Change My Password</a> | ");
+
+echo("<a href='logout_action.php' tite='Logout'>Logout.</a>");
+echo("</nav>");
+
 ?>
