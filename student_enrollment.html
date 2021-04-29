@@ -7,14 +7,24 @@
     <p>Enter CRN numbers of classes you want to enroll in</p>
     <form method="post" action="student_enrollment_action.php">
         <button type="submit" name="enroll">Enroll</button>
-        <input type="text" size=6 name="crn1">
-        <input type="text" size=6 name="crn2">
-        <input type="text" size=6 name="crn3">
-        <input type="text" size=6 name="crn4">
+<!-- We can change the number of textboxes without changing student_enrollment_action.php -->
+        <input type="text" size=6 name="crn[]">
+        <input type="text" size=6 name="crn[]">
+        <input type="text" size=6 name="crn[]">
+        <input type="text" size=6 name="crn[]">
     </form>
     <form method="post" action="welcomepage.php">
         <button type="submit" name="goback">Go Back</button>
     </form>
+  <?php
+require_once "verifysession.php";
+
+   if (isset($_SESSION["enrollment_status"])) {
+       echo "<p>" . $_SESSION["enrollment_status"] . "</p> <br>";
+       unset($_SESSION["enrollment_status"]);
+   }
+
+  ?>
 </body>
 </html>
 
