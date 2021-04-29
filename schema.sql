@@ -348,9 +348,12 @@ BEGIN
         OR  to_char(s_rec.begin_time, 'hh24mi')
             BETWEEN to_char(s.begin_time, 'hh24mi') AND to_char(s.end_time, 'hh24mi');
 
-    IF l_count > 0 THEN
+    IF l_count = 1 THEN
         -- Section times overlap
         RETURN 5;
+    ELSIF  l_count > 1 THEN 
+        -- Programming error. This should never occur
+        RETURN 6;
     END IF;
 
     SELECT COUNT(*) INTO l_count
