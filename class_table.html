@@ -33,7 +33,7 @@ try
     $connection = oci_connect_local();                       
 
     $sql = "select title, description, credits,"
-         . " crn, subject, deadline, remaining,"
+         . " crn, subject, deadline, remaining, capacity,"
          . " extract(hour from begin_time),"
          . " extract(minute from begin_time),"
          . " extract(hour from end_time),"
@@ -61,6 +61,7 @@ try
     echo "<th>subject</th>";
     echo "<th>deadline</th>";
     echo "<th>remaining</th>";
+    echo "<th>capacity</th>";
     echo "<th>start</th>";
     echo "<th>end</th>";
     echo "</tr>";
@@ -74,8 +75,9 @@ try
         echo "<td>$array[4]</td>";
         echo "<td>$array[5]</td>";
         echo "<td>$array[6]</td>";
-        printf("<td>%02d:%02d</td>", $array[7], $array[8]);
-        printf("<td>%02d:%02d</td>", $array[9], $array[10]);
+        echo "<td>$array[7]</td>";
+        printf("<td>%02d:%02d</td>", $array[8], $array[9]);
+        printf("<td>%02d:%02d</td>", $array[10], $array[11]);
         echo "</tr>";
     }
     echo "</table>";
