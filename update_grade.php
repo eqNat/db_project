@@ -1,7 +1,7 @@
 <?
 // include the verification PHP script
-include "utility_functions.php";
-include "verifysession.php";
+require_once "utility_functions.php";
+require_once "verifysession.php";
 
 
 // include "verifysession.php";
