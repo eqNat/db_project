@@ -13,7 +13,7 @@ try
     foreach ($_POST['crn'] as $crn)
     {
         if (strlen($crn) == 0)
-            break;
+            continue;
 
         $i++;
         if (! is_numeric($crn))
