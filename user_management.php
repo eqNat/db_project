@@ -61,7 +61,6 @@ if ($result == false){
   display_oracle_error_message($cursor);
   die("Client Query Failed.") ;
 }
-
 // Display the query results
 echo "<table class=\"blueTable\">";
 echo ("
@@ -105,4 +104,5 @@ echo("<br />
     <form method=\"post\" action=\"user_add.html\">
     <input type=\"submit\" value=\"Add A New User\">
     </form>
+");
 ?>

@@ -24,7 +24,6 @@ if(isset($_POST['isstudent']))
 // display the insertion form.
 echo("
   <form method=\"post\" action=\"user_add_action.php?sessionid=$sessionid\">
-  Id (Required, up to 10 digits): <input type=\"text\" value = \"$eid\" size=\"10\" maxlength=\"10\" name=\"eid\"> <br /> 
   Firstname (Required): <input type=\"text\" value = \"$fname\" size=\"20\" maxlength=\"30\" name=\"fname\">  <br />
   Lastname (Required): <input type=\"text\" value = \"$lname\" size=\"20\" maxlength=\"30\" name=\"lname\">  <br />
   Student (Required): <input type=\"checkbox\" checked = \"$isstudent\" value = \"isstudent\" name=\"isstudent\" >  <br />

@@ -10,8 +10,9 @@ try
     $connection = oci_connect_local();
 
     {// Insert myclient record
-        $sql_myclient = "insert * into myclient values(
-                         :clientid,
+        $initial = substr($_POST['fname'], 0, 1) . substr($_POST['lname'], 0, 1);
+        $sql_myclient = "insert into myclient values(
+                          '$initial' || student_id_seq.nextval,
                          :fname,
                          :lname,
                          :password,
@@ -24,9 +25,9 @@ try
             throw new Exception($error['message']);
         }
 
+
         // If a bind fails...
-        if (! (oci_bind_by_name($stmt_myclient, ':clientid', $_POST['eid'], 10)
-            && oci_bind_by_name($stmt_myclient, ':fname', $_POST['fname'], 30)
+        if (! (oci_bind_by_name($stmt_myclient, ':fname', $_POST['fname'], 30)
             && oci_bind_by_name($stmt_myclient, ':lname', $_POST['lname'], 30)
             && oci_bind_by_name($stmt_myclient, ':password', $_POST['password'], 20)
         ) )
@@ -42,7 +43,7 @@ try
             $error = oci_error($stmt_myclient);
             throw new Exception($error['message']);
         }
-    }
+//    }
 
     if (isset($_POST["isstudent"]))
     {// Insert student record
