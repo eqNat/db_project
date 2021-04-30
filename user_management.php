@@ -64,7 +64,19 @@ if ($result == false){
 
 // Display the query results
 echo "<table class=\"blueTable\">";
-echo "<thead><tr> <th>Id</th> <th>Firstname</th> <th>Lastname</th> <th>Student ID</th> <th>Admin</th> <th>Update</th> <th>Delete</th> <th>Password Reset</th> <th>Password</th> </tr></thead>";
+echo ("
+<thead>
+  <tr> 
+    <th>Id</th> 
+    <th>Firstname</th> 
+    <th>Lastname</th> 
+    <th>Student ID</th>
+    <th>Admin</th>
+    <th>Update</th>
+    <th>Delete</th>
+    <th>Password Reset</th>
+  </tr>
+</thead>");
 
 // Fetch the result from the cursor one by one
 while ($values = oci_fetch_array ($cursor)){
@@ -80,7 +92,6 @@ while ($values = oci_fetch_array ($cursor)){
     " <td> <A HREF=\"user_update.php?eid=$eid\">Update</A> </td> ".
     " <td> <A HREF=\"user_delete.php?eid=$eid\">Delete</A> </td> ".
     " <td> <A HREF=\"reset_password.php?eid=$eid\">Reset</A> </td> ".
-    "<td>$password</td>".
     "</tr>");
 }
 oci_free_statement($cursor);
@@ -88,6 +99,9 @@ oci_free_statement($cursor);
 echo "</table>";
 
 echo("<br />
+    <form method=\"post\" action=\"update_grade.php\">
+    <input type=\"submit\" value=\"Update Student Grades\">
+    </form>
     <form method=\"post\" action=\"user_add.html\">
     <input type=\"submit\" value=\"Add A New User\">
     </form>
