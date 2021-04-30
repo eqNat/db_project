@@ -233,6 +233,12 @@ INSERT INTO requires VALUES (1453, 1457);
 INSERT INTO requires VALUES (1454, 1457);
 
 -- sheev palpatine enrollment info --
+-- physics, no grade
+INSERT INTO enrolled (studentid, crn)
+SELECT s.studentid, 10109 from student s
+JOIN myclient m ON m.clientid = s.clientid
+WHERE m.fname = 'Sheev' AND m.lname = 'Palpatine';
+
 -- physics lab, no grade
 INSERT INTO enrolled (studentid, crn)
 SELECT s.studentid, 13109 from student s
@@ -247,19 +253,23 @@ WHERE m.fname = 'Sheev' AND m.lname = 'Palpatine';
 
   
 -- darth maul enrollment info --  
--- physics lab, no grade
-INSERT INTO enrolled (studentid, crn)
-SELECT s.studentid, 13109 from student s
-JOIN myclient m ON m.clientid = s.clientid
-WHERE m.fname = 'Darth' AND m.lname = 'Maul';
-
 -- algebra, with grade
 INSERT INTO enrolled (studentid, crn, grade)
-SELECT s.studentid, 10002, 3 from student s
+SELECT s.studentid, 10002, 4 from student s
 JOIN myclient m ON m.clientid = s.clientid
 WHERE m.fname = 'Darth' AND m.lname = 'Maul';
 
+-- trigonomentry, with grade
+INSERT INTO enrolled (studentid, crn, grade)
+SELECT s.studentid, 10006, 3 from student s
+JOIN myclient m ON m.clientid = s.clientid
+WHERE m.fname = 'Darth' AND m.lname = 'Maul';
 
+-- calculus, with grade
+INSERT INTO enrolled (studentid, crn, grade)
+SELECT s.studentid, 10107, 3 from student s
+JOIN myclient m ON m.clientid = s.clientid
+WHERE m.fname = 'Darth' AND m.lname = 'Maul';
 
 
 
