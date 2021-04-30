@@ -32,17 +32,15 @@ try
 {// Add user to database    
     $connection = oci_connect_local();                       
 
-    $sql = "select c.title, c.description, c.credits,"
-         . " s.crn, s.deadline,"
-         . " extract(hour from s.begin_time),"
-         . " extract(minute from s.begin_time),"
-         . " extract(hour from s.end_time),"
-         . " extract(minute from s.end_time)"
-         . " from section s join course c on s.courseid = c.id"
-         . " where extract(year from s.deadline) = " . substr($_POST["year"], 0, 4)
-         . " and s.semester = '" . substr($_POST["year"], 5) . "'";
-
-    echo "$sql";
+    $sql = "select title, description, credits,"
+         . " crn, subject, deadline, remaining,"
+         . " extract(hour from begin_time),"
+         . " extract(minute from begin_time),"
+         . " extract(hour from end_time),"
+         . " extract(minute from end_time)"
+         . " from v_section"
+         . " where extract(year from deadline) = " . substr($_POST["year"], 0, 4)
+         . " and semester = '" . substr($_POST["year"], 5) . "'";
 
     $result_array = execute_sql_in_oracle($sql);
 
@@ -60,7 +58,9 @@ try
     echo "<th>description</th>";
     echo "<th>credits</th>";
     echo "<th>crn</th>";
+    echo "<th>subject</th>";
     echo "<th>deadline</th>";
+    echo "<th>remaining</th>";
     echo "<th>start</th>";
     echo "<th>end</th>";
     echo "</tr>";
@@ -72,8 +72,10 @@ try
         echo "<td>$array[2]</td>";
         echo "<td>$array[3]</td>";
         echo "<td>$array[4]</td>";
-        printf("<td>%02d:%02d</td>", $array[5], $array[6]);
+        echo "<td>$array[5]</td>";
+        echo "<td>$array[6]</td>";
         printf("<td>%02d:%02d</td>", $array[7], $array[8]);
+        printf("<td>%02d:%02d</td>", $array[9], $array[10]);
         echo "</tr>";
     }
     echo "</table>";
