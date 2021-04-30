@@ -86,6 +86,11 @@ CREATE TABLE section (
     -- We'll ignore year, month, and day.
     begin_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
+	ismonday NUMBER(1) NOT NULL,
+	istuesday NUMBER(1) NOT NULL,
+	iswednesday NUMBER(1) NOT NULL,
+	isthursday NUMBER(1) NOT NULL,
+	isfriday NUMBER(1) NOT NULL,
     FOREIGN KEY (courseid) REFERENCES course
 );
 
@@ -103,86 +108,111 @@ CREATE TABLE requires (
 );
 
 INSERT INTO course VALUES (1453, 'Algebra', 'Learn about Algebra', 3, 'MATH');
+-- mwf
 INSERT INTO section VALUES (10000, '1453', DATE '2021-08-25', 4, 'FA',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 15:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,1,0,1);
 INSERT INTO section VALUES (10001, '1453', DATE '2021-08-24', 3, 'FA',
     TO_DATE('2000/01/01 14:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:50:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 15:15:00', 'yyyy/mm/dd hh24:mi:ss'),
+	0,1,0,1,0);
 INSERT INTO section VALUES (10002, '1453', DATE '2020-05-24', 5, 'SU',
     TO_DATE('2000/01/01 10:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 10:50:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 10:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,1,0,1);
 INSERT INTO section VALUES (10003, '1453', DATE '2020-08-24', 4, 'FA',
     TO_DATE('2000/01/01 10:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 10:50:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 10:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,1,0,1);
 INSERT INTO section VALUES (20001, '1453', DATE '2021-05-24', 3, 'SU',
     TO_DATE('2000/01/01 14:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:50:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 15:15:00', 'yyyy/mm/dd hh24:mi:ss'),
+	0,1,0,1,0);
 
 INSERT INTO course VALUES (1454, 'Trigonometry', 'Learn about Trigonometry', 3, 'MATH');
 INSERT INTO section VALUES (10004, '1454', DATE '2021-08-25', 4, 'FA',
-    TO_DATE('2000/01/01 12:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 12:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
+    TO_DATE('2000/01/01 15:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,1,0,1);
 INSERT INTO section VALUES (10005, '1454', DATE '2021-08-24', 3, 'FA',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 15:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,1,0,1);
 INSERT INTO section VALUES (10006, '1454', DATE '2020-08-25', 4, 'FA',
     TO_DATE('2000/01/01 8:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 8:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 8:55:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,1,0,1);
 INSERT INTO section VALUES (10007, '1454', DATE '2019-01-25', 4, 'SP',
     TO_DATE('2000/01/01 8:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 8:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 8:55:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,1,0,1);
 INSERT INTO section VALUES (10008, '1454', DATE '2021-08-24', 4, 'FA',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 16:15:00', 'yyyy/mm/dd hh24:mi:ss'),
+	0,1,0,1,0);
 INSERT INTO section VALUES (20004, '1454', DATE '2021-05-25', 4, 'SU',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 16:15:00', 'yyyy/mm/dd hh24:mi:ss'),
+	0,1,0,1,0);
 
 INSERT INTO course VALUES (1455, 'Calculus I', 'Learn about Calculus I', 3, 'MATH');
 INSERT INTO section VALUES (10104, '1455', DATE '2021-08-25', 4, 'FA',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 15:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,1,0,1);
 INSERT INTO section VALUES (10105, '1455', DATE '2021-08-25', 4, 'FA',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 15:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,1,0,1);
 INSERT INTO section VALUES (10106, '1455', DATE '2021-01-25', 4, 'SP',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 16:15:00', 'yyyy/mm/dd hh24:mi:ss'),
+	0,1,0,1,0);
 INSERT INTO section VALUES (10107, '1455', DATE '2020-01-25', 4, 'SP',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 15:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,1,0,1);
 INSERT INTO section VALUES (20107, '1455', DATE '2020-01-25', 4, 'SP',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 15:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,1,0,1);
 
 INSERT INTO course VALUES (1456, 'Physics', 'Learn about Physics', 3, 'PHYS');
 INSERT INTO section VALUES (11109, '1456', DATE '2021-08-25', 4, 'FA',
-    TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 12:00:00', 'yyyy/mm/dd hh24:mi:ss'),
+    TO_DATE('2000/01/01 12:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,1,0,1);
 INSERT INTO section VALUES (10109, '1456', DATE '2021-08-25', 4, 'FA',
-    TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 17:00:00', 'yyyy/mm/dd hh24:mi:ss'),
+    TO_DATE('2000/01/01 18:15:00', 'yyyy/mm/dd hh24:mi:ss'),
+	0,1,0,1,0);
 INSERT INTO section VALUES (10110, '1456', DATE '2021-01-25', 4, 'SP',
     TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 15:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,1,0,1);
 INSERT INTO section VALUES (10118, '1456', DATE '2021-01-25', 4, 'SP',
-    TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 16:15:00', 'yyyy/mm/dd hh24:mi:ss'),
+    TO_DATE('2000/01/01 17:30:00', 'yyyy/mm/dd hh24:mi:ss'),
+	0,1,0,1,0);
 
 INSERT INTO course VALUES (1457, 'Physics Lab', 'Learn about Physics Lab', 1, 'PHYS');
 INSERT INTO section VALUES (12109, '1457', DATE '2021-08-25', 4, 'FA',
     TO_DATE('2000/01/01 9:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 9:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 9:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	0,1,0,0,0);
 INSERT INTO section VALUES (13109, '1457', DATE '2021-08-25', 4, 'FA',
-    TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 10:00:00', 'yyyy/mm/dd hh24:mi:ss'),
+    TO_DATE('2000/01/01 10:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	1,0,0,0,0);
 INSERT INTO section VALUES (12110, '1457', DATE '2021-01-25', 4, 'SP',
-    TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 13:00:00', 'yyyy/mm/dd hh24:mi:ss'),
+    TO_DATE('2000/01/01 13:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	0,0,0,0,1);
 INSERT INTO section VALUES (12118, '1457', DATE '2021-01-25', 4, 'SP',
-    TO_DATE('2000/01/01 15:00:00', 'yyyy/mm/dd hh24:mi:ss'),
-    TO_DATE('2000/01/01 15:55:00', 'yyyy/mm/dd hh24:mi:ss'));
+    TO_DATE('2000/01/01 14:00:00', 'yyyy/mm/dd hh24:mi:ss'),
+    TO_DATE('2000/01/01 14:50:00', 'yyyy/mm/dd hh24:mi:ss'),
+	0,0,1,0,0);
 
 -- calculus I requires algebra
 INSERT INTO requires VALUES (1453, 1455);
@@ -201,6 +231,46 @@ INSERT INTO requires VALUES (1453, 1457);
 
 -- physics lab requires trigonometry
 INSERT INTO requires VALUES (1454, 1457);
+
+-- sheev palpatine enrollment info --
+-- physics, no grade
+INSERT INTO enrolled (studentid, crn)
+SELECT s.studentid, 10109 from student s
+JOIN myclient m ON m.clientid = s.clientid
+WHERE m.fname = 'Sheev' AND m.lname = 'Palpatine';
+
+-- physics lab, no grade
+INSERT INTO enrolled (studentid, crn)
+SELECT s.studentid, 13109 from student s
+JOIN myclient m ON m.clientid = s.clientid
+WHERE m.fname = 'Sheev' AND m.lname = 'Palpatine';
+
+-- algebra, with grade
+INSERT INTO enrolled (studentid, crn, grade)
+SELECT s.studentid, 10002, 3 from student s
+JOIN myclient m ON m.clientid = s.clientid
+WHERE m.fname = 'Sheev' AND m.lname = 'Palpatine';
+
+  
+-- darth maul enrollment info --  
+-- algebra, with grade
+INSERT INTO enrolled (studentid, crn, grade)
+SELECT s.studentid, 10002, 4 from student s
+JOIN myclient m ON m.clientid = s.clientid
+WHERE m.fname = 'Darth' AND m.lname = 'Maul';
+
+-- trigonomentry, with grade
+INSERT INTO enrolled (studentid, crn, grade)
+SELECT s.studentid, 10006, 3 from student s
+JOIN myclient m ON m.clientid = s.clientid
+WHERE m.fname = 'Darth' AND m.lname = 'Maul';
+
+-- calculus, with grade
+INSERT INTO enrolled (studentid, crn, grade)
+SELECT s.studentid, 10107, 3 from student s
+JOIN myclient m ON m.clientid = s.clientid
+WHERE m.fname = 'Darth' AND m.lname = 'Maul';
+
 
 
 CREATE OR REPLACE VIEW v_student_info AS
