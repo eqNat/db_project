@@ -18,9 +18,6 @@ JOIN section sc on sc.crn = e.crn
 JOIN course c on sc.courseid = c.id
 where s.clientid = '$eid'";
 
-
-echo($sql);
-
 $result_array = execute_sql_in_oracle ($sql);
 $result = $result_array["flag"];
 $cursor = $result_array["cursor"];
@@ -29,12 +26,6 @@ if ($result == false){
   display_oracle_error_message($cursor);
   die("Client Query Failed.") ;
 }
-
-while ($values = oci_fetch_array ($cursor)){
-  echo("
-      pizza
-  ");
-  }
 
 echo("
 <style>
@@ -74,21 +65,11 @@ div {
 </style>
 
 <div>
-<form action=\"/update-grade-action.php\">
-    <label for=\"clientid\">Client Id:</label>
-    <input readonly placeholder=\"Enter Client ID\" type=\"text\" value=\"$eid\" id=\"clientid\" name=\"clientid\"><br><br>
-    <label for=\"crn\">Course:</label>
-    <select name=\"crn\" id=\"crn\">");
-
-    while ($values = oci_fetch_array ($cursor)){
-      echo("
-          pizza
-      ");
-      }
-
-oci_free_statement($cursor);
-echo("
-</select>
+<form method=\"post\" action=\"update_grade_action.php\">
+    <label for=\"sid\">Student Id:</label>
+    <input placeholder=\"Enter Student ID\" type=\"text\" id=\"sid\" name=\"sid\"><br><br>
+    <label for=\"crn\">CRN:</label>
+    <input placeholder=\"Enter CRN\" type=\"text\" id=\"crn\" name=\"crn\"><br><br>
     <label for=\"grade\">Grade:</label>
     <select name=\"grade\" id=\"grade\">
         <option value=\"4\">A</option>
@@ -101,5 +82,4 @@ echo("
 </form>
 </div>
 ");
-// <option value=\"$values[0]\">$values[1]</option>
 ?>
